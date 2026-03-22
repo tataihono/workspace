@@ -2,7 +2,9 @@ import type { ReactNode } from 'react'
 import type { Metadata, Viewport } from 'next'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
+import { AnnouncementBanner } from '@/components/layout/AnnouncementBanner'
 import { OrganizationJsonLd } from '@/components/seo/OrganizationJsonLd'
+import { GoogleAnalytics } from '@/components/seo/GoogleAnalytics'
 import '@/styles/globals.css'
 
 export const metadata: Metadata = {
@@ -67,6 +69,8 @@ export default function FrontendLayout({ children }: { children: ReactNode }) {
         <OrganizationJsonLd />
       </head>
       <body className="bg-warm-white font-sans text-brand-black antialiased">
+        <GoogleAnalytics />
+        <AnnouncementBanner />
         <Header />
         <main>{children}</main>
         <Footer />
