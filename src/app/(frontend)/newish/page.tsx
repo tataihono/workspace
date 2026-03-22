@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { ScrollReveal } from '@/components/ui/ScrollReveal'
 import { Button } from '@/components/ui/Button'
+import { SignupForm } from '@/components/forms/SignupForm'
 
 export const metadata: Metadata = {
   title: 'Newish Connect | Ev Church Auckland',
@@ -201,32 +202,7 @@ export default function NewishPage() {
             </p>
 
             <div className="mt-10 rounded-xl border border-warm-grey/60 bg-warm-white p-8">
-              <div className="space-y-4">
-                <div className="text-left">
-                  <label htmlFor="nc-name" className="block text-sm font-semibold text-dark-grey">Name</label>
-                  <input
-                    id="nc-name"
-                    type="text"
-                    placeholder="Your name"
-                    className="mt-1 w-full rounded-md border border-warm-grey/60 bg-white px-4 py-3 text-sm text-brand-black placeholder:text-mid-grey focus:border-rich-red focus:outline-none focus:ring-1 focus:ring-rich-red"
-                  />
-                </div>
-                <div className="text-left">
-                  <label htmlFor="nc-email" className="block text-sm font-semibold text-dark-grey">Email</label>
-                  <input
-                    id="nc-email"
-                    type="email"
-                    placeholder="your@email.com"
-                    className="mt-1 w-full rounded-md border border-warm-grey/60 bg-white px-4 py-3 text-sm text-brand-black placeholder:text-mid-grey focus:border-rich-red focus:outline-none focus:ring-1 focus:ring-rich-red"
-                  />
-                </div>
-                <button
-                  type="button"
-                  className="mt-2 w-full rounded-md bg-rich-red px-8 py-3.5 text-base font-semibold text-white shadow-sm transition-all duration-200 hover:bg-deep-red hover:shadow-md active:scale-[0.97]"
-                >
-                  Register interest
-                </button>
-              </div>
+              <SignupForm formTitle="Newish Connect" />
             </div>
           </ScrollReveal>
         </div>

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { ScrollReveal } from '@/components/ui/ScrollReveal'
+import { ContactForm } from '@/components/forms/ContactForm'
 
 export const metadata: Metadata = {
   title: 'Contact | Ev Church Auckland',
@@ -72,82 +73,9 @@ export default function ContactPage() {
           {/* Contact Form */}
           <div className="lg:col-span-3">
             <ScrollReveal>
-              <form className="space-y-6 rounded-xl border border-warm-grey/60 bg-white p-8 shadow-sm lg:p-10">
-                <div>
-                  <label
-                    htmlFor="contact-name"
-                    className="block text-sm font-semibold text-brand-black"
-                  >
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    id="contact-name"
-                    name="name"
-                    placeholder="Your full name"
-                    className="mt-2 block w-full rounded-md border border-warm-grey/60 bg-warm-white px-4 py-3 text-brand-black placeholder:text-mid-grey focus:border-rich-red focus:outline-none focus:ring-2 focus:ring-rich-red/20"
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="contact-email"
-                    className="block text-sm font-semibold text-brand-black"
-                  >
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="contact-email"
-                    name="email"
-                    placeholder="you@example.com"
-                    className="mt-2 block w-full rounded-md border border-warm-grey/60 bg-warm-white px-4 py-3 text-brand-black placeholder:text-mid-grey focus:border-rich-red focus:outline-none focus:ring-2 focus:ring-rich-red/20"
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="contact-campus"
-                    className="block text-sm font-semibold text-brand-black"
-                  >
-                    Campus
-                  </label>
-                  <select
-                    id="contact-campus"
-                    name="campus"
-                    className="mt-2 block w-full rounded-md border border-warm-grey/60 bg-warm-white px-4 py-3 text-brand-black focus:border-rich-red focus:outline-none focus:ring-2 focus:ring-rich-red/20"
-                  >
-                    <option value="">Select a campus</option>
-                    <option value="north">North</option>
-                    <option value="central">Central</option>
-                    <option value="unichurch">Unichurch</option>
-                    <option value="general">General enquiry</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="contact-message"
-                    className="block text-sm font-semibold text-brand-black"
-                  >
-                    Message
-                  </label>
-                  <textarea
-                    id="contact-message"
-                    name="message"
-                    rows={5}
-                    placeholder="How can we help?"
-                    className="mt-2 block w-full resize-y rounded-md border border-warm-grey/60 bg-warm-white px-4 py-3 text-brand-black placeholder:text-mid-grey focus:border-rich-red focus:outline-none focus:ring-2 focus:ring-rich-red/20"
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  className="inline-flex items-center justify-center rounded-md bg-rich-red px-8 py-3.5 text-base font-semibold text-white shadow-sm transition-all duration-200 hover:bg-deep-red hover:shadow-md active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rich-red focus-visible:ring-offset-2"
-                >
-                  Send message
-                </button>
-              </form>
+              <div className="rounded-xl border border-warm-grey/60 bg-white p-8 shadow-sm lg:p-10">
+                <ContactForm />
+              </div>
             </ScrollReveal>
           </div>
 
