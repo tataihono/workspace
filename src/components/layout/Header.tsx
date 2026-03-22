@@ -254,23 +254,45 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [hidden, setHidden] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
-  const lastScrollY = useRef(0)
-
-  const onScroll = useCallback(() => {
-    const y = window.scrollY
-    setScrolled(y > 50)
-    if (y > 120) {
-      setHidden(y > lastScrollY.current && y - lastScrollY.current > 5)
-    } else {
-      setHidden(false)
-    }
-    lastScrollY.current = y
-  }, [])
 
   useEffect(() => {
+    let lastY = window.scrollY
+    let accumulatedDelta = 0
+    // Require 40px of consistent scroll in one direction before toggling
+    const THRESHOLD = 40
+
+    function onScroll() {
+      const y = window.scrollY
+      const delta = y - lastY
+      lastY = y
+
+      setScrolled(y > 50)
+
+      // Near top of page — always show
+      if (y < 120) {
+        setHidden(false)
+        accumulatedDelta = 0
+        return
+      }
+
+      // Accumulate delta in the current direction; reset if direction reverses
+      if ((delta > 0 && accumulatedDelta < 0) || (delta < 0 && accumulatedDelta > 0)) {
+        accumulatedDelta = 0
+      }
+      accumulatedDelta += delta
+
+      if (accumulatedDelta > THRESHOLD) {
+        setHidden(true)
+        accumulatedDelta = 0
+      } else if (accumulatedDelta < -THRESHOLD) {
+        setHidden(false)
+        accumulatedDelta = 0
+      }
+    }
+
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
-  }, [onScroll])
+  }, [])
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : ''
