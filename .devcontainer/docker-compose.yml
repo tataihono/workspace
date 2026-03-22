@@ -8,6 +8,8 @@ services:
         GIT_DELTA_VERSION: "0.18.2"
         ZSH_IN_DOCKER_VERSION: "1.2.1"
     init: true
+    stdin_open: true
+    tty: true
     cap_add:
       - NET_ADMIN
       - NET_RAW
