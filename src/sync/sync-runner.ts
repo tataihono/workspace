@@ -1,0 +1,276 @@
+import { getPayloadClient } from '@/lib/payload'
+import { rockFetch } from '@/lib/rock-api'
+import type {
+  RockCampus,
+  RockGroupMember,
+  RockEventItemOccurrence,
+  RockContentChannelItem,
+  RockGroup,
+} from '@/lib/rock-api'
+import { mapRockCampus } from './mappers/campus'
+import { mapRockTeamMember, TEAM_GROUP_IDS } from './mappers/team-member'
+import { mapRockEvent } from './mappers/event'
+import { mapRockSermonSeries } from './mappers/sermon-series'
+import { mapRockConnectGroup } from './mappers/connect-group'
+import { revalidateTag } from 'next/cache'
+import { CACHE_TAGS } from '@/lib/cache-tags'
+
+type SyncResult = {
+  entity: string
+  created: number
+  updated: number
+  deleted: number
+  errors: string[]
+}
+
+/**
+ * Full reconciliation sync for all Rock RMS entity types.
+ * Designed to run on a 15-minute cron schedule.
+ */
+export async function runFullSync(): Promise<SyncResult[]> {
+  const results: SyncResult[] = []
+
+  results.push(await syncCampuses())
+  results.push(await syncTeamMembers())
+  results.push(await syncEvents())
+  results.push(await syncSermonSeries())
+  results.push(await syncConnectGroups())
+
+  return results
+}
+
+async function syncCampuses(): Promise<SyncResult> {
+  const result: SyncResult = { entity: 'campuses', created: 0, updated: 0, deleted: 0, errors: [] }
+
+  try {
+    const payload = await getPayloadClient()
+    const rockCampuses = await rockFetch<RockCampus[]>({
+      endpoint: 'Campuses',
+      params: {
+        $filter: 'IsActive eq true and CampusTypeValueId eq 768',
+        $orderby: 'Order',
+      },
+    })
+
+    for (const rockCampus of rockCampuses) {
+      const mapped = mapRockCampus(rockCampus)
+      const existing = await payload.find({
+        collection: 'campuses',
+        where: { rockId: { equals: mapped.rockId } },
+        depth: 0,
+        limit: 1,
+      })
+
+      if (existing.docs.length > 0) {
+        await payload.update({
+          collection: 'campuses',
+          id: existing.docs[0].id,
+          data: mapped,
+        })
+        result.updated++
+      } else {
+        await payload.create({
+          collection: 'campuses',
+          data: mapped,
+        })
+        result.created++
+      }
+    }
+
+    revalidateTag(CACHE_TAGS.campuses, 'default')
+  } catch (error) {
+    result.errors.push(String(error))
+  }
+
+  return result
+}
+
+async function syncTeamMembers(): Promise<SyncResult> {
+  const result: SyncResult = { entity: 'team-members', created: 0, updated: 0, deleted: 0, errors: [] }
+
+  try {
+    const payload = await getPayloadClient()
+
+    for (const groupId of TEAM_GROUP_IDS) {
+      const members = await rockFetch<RockGroupMember[]>({
+        endpoint: `Groups/${groupId}/members`,
+        params: {
+          $filter: "GroupMemberStatus eq 'Active'",
+          $expand: 'Person,GroupRole',
+          $orderby: 'GroupOrder',
+        },
+      })
+
+      for (const member of members) {
+        const mapped = mapRockTeamMember(member, groupId)
+        const existing = await payload.find({
+          collection: 'team-members',
+          where: { rockPersonId: { equals: mapped.rockPersonId } },
+          depth: 0,
+          limit: 1,
+        })
+
+        if (existing.docs.length > 0) {
+          await payload.update({
+            collection: 'team-members',
+            id: existing.docs[0].id,
+            data: mapped,
+          })
+          result.updated++
+        } else {
+          await payload.create({
+            collection: 'team-members',
+            data: mapped,
+          })
+          result.created++
+        }
+      }
+    }
+
+    revalidateTag(CACHE_TAGS.teamMembers, 'default')
+  } catch (error) {
+    result.errors.push(String(error))
+  }
+
+  return result
+}
+
+async function syncEvents(): Promise<SyncResult> {
+  const result: SyncResult = { entity: 'events', created: 0, updated: 0, deleted: 0, errors: [] }
+
+  try {
+    const payload = await getPayloadClient()
+    const occurrences = await rockFetch<RockEventItemOccurrence[]>({
+      endpoint: 'EventItemOccurrences',
+      params: {
+        $filter: 'EventItem/IsActive eq true',
+        $expand: 'EventItem,Schedule,Campus',
+        $orderby: 'NextStartDateTime',
+      },
+    })
+
+    for (const occ of occurrences) {
+      const mapped = mapRockEvent(occ)
+      const existing = await payload.find({
+        collection: 'events',
+        where: { rockEventId: { equals: mapped.rockEventId } },
+        depth: 0,
+        limit: 1,
+      })
+
+      if (existing.docs.length > 0) {
+        await payload.update({
+          collection: 'events',
+          id: existing.docs[0].id,
+          data: mapped,
+        })
+        result.updated++
+      } else {
+        await payload.create({
+          collection: 'events',
+          data: mapped,
+        })
+        result.created++
+      }
+    }
+
+    revalidateTag(CACHE_TAGS.events, 'default')
+  } catch (error) {
+    result.errors.push(String(error))
+  }
+
+  return result
+}
+
+async function syncSermonSeries(): Promise<SyncResult> {
+  const result: SyncResult = { entity: 'sermon-series', created: 0, updated: 0, deleted: 0, errors: [] }
+
+  try {
+    const payload = await getPayloadClient()
+    const items = await rockFetch<RockContentChannelItem[]>({
+      endpoint: 'ContentChannelItems',
+      params: {
+        $filter: 'ContentChannelId eq 4 and Status eq 2',
+        $orderby: 'StartDateTime desc',
+      },
+    })
+
+    for (const item of items) {
+      const mapped = mapRockSermonSeries(item)
+      const existing = await payload.find({
+        collection: 'sermon-series',
+        where: { rockContentItemId: { equals: mapped.rockContentItemId } },
+        depth: 0,
+        limit: 1,
+      })
+
+      if (existing.docs.length > 0) {
+        await payload.update({
+          collection: 'sermon-series',
+          id: existing.docs[0].id,
+          data: mapped,
+        })
+        result.updated++
+      } else {
+        await payload.create({
+          collection: 'sermon-series',
+          data: mapped,
+        })
+        result.created++
+      }
+    }
+
+    revalidateTag(CACHE_TAGS.sermonSeries, 'default')
+  } catch (error) {
+    result.errors.push(String(error))
+  }
+
+  return result
+}
+
+async function syncConnectGroups(): Promise<SyncResult> {
+  const result: SyncResult = { entity: 'connect-groups', created: 0, updated: 0, deleted: 0, errors: [] }
+
+  try {
+    const payload = await getPayloadClient()
+    const groups = await rockFetch<RockGroup[]>({
+      endpoint: 'Groups',
+      params: {
+        $filter: 'GroupTypeId eq 25 and IsActive eq true',
+        $expand: 'Members,GroupLocations,Campus',
+        $orderby: 'Name',
+      },
+    })
+
+    for (const group of groups) {
+      const mapped = mapRockConnectGroup(group)
+      const existing = await payload.find({
+        collection: 'connect-groups',
+        where: { rockGroupId: { equals: mapped.rockGroupId } },
+        depth: 0,
+        limit: 1,
+      })
+
+      if (existing.docs.length > 0) {
+        await payload.update({
+          collection: 'connect-groups',
+          id: existing.docs[0].id,
+          data: mapped,
+        })
+        result.updated++
+      } else {
+        await payload.create({
+          collection: 'connect-groups',
+          data: mapped,
+        })
+        result.created++
+      }
+    }
+
+    revalidateTag(CACHE_TAGS.connectGroups, 'default')
+  } catch (error) {
+    result.errors.push(String(error))
+  }
+
+  return result
+}
