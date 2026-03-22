@@ -1,0 +1,95 @@
+<!-- Source: https://www.ev.church/contact | Captured: 2026-03-22 | Layout: FullWidthNarrow -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact - Ev Church</title>
+  <meta name="description" content="Contact Ev Church - form, addresses, and campus locations">
+</head>
+<body>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h1>Contact</h1>
+  </section>
+
+  <!-- Intro -->
+  <section class="intro">
+    <p>If there is anything you would like to know about the community at Ev church, or have any questions, please feel free to contact us here by filling in this form and one of the team will get back to you as soon as we can.</p>
+  </section>
+
+  <!-- Contact Form -->
+  <section class="contact-form">
+    <h2>We'd love to hear from you</h2>
+    <form action="/contact/submit" method="POST">
+      <div class="form-group">
+        <label for="first-name">First Name</label>
+        <input type="text" id="first-name" name="firstName" required>
+      </div>
+      <div class="form-group">
+        <label for="last-name">Last Name</label>
+        <input type="text" id="last-name" name="lastName" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="mobile-phone">Mobile Phone</label>
+        <input type="tel" id="mobile-phone" name="mobilePhone">
+      </div>
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5" required></textarea>
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  </section>
+
+  <!-- Mailing Address -->
+  <section class="mailing-address">
+    <h2>Mailing Address</h2>
+    <address>
+      Auckland Evangelical Church<br>
+      P.O Box 41066<br>
+      Mt Roskill<br>
+      Auckland, 1440
+    </address>
+  </section>
+
+  <!-- Campus Locations -->
+  <section class="campus-locations">
+    <h2>Campus Locations</h2>
+
+    <article class="campus">
+      <h3>North Campus</h3>
+      <p><strong>Service Time:</strong> Sunday at 10:15am</p>
+      <address>9-11 Rothwell Avenue, Rosedale, Auckland 0632</address>
+    </article>
+
+    <article class="campus">
+      <h3>Central Campus</h3>
+      <p><strong>Service Time:</strong> Sunday at 10:15am</p>
+      <address>80 Olsen Ave, Hillsborough, Auckland 1042</address>
+    </article>
+
+    <article class="campus">
+      <h3>Unichurch Campus</h3>
+      <p><strong>Service Time:</strong> Sunday at 5:15pm</p>
+      <address>Old Government House (B102), Auckland Central, Auckland 1010</address>
+    </article>
+  </section>
+
+  <!-- Services Description -->
+  <section class="services-info">
+    <p>Services at Ev Church are all about Jesus. We gather each Sunday across our campuses to worship, hear from God's word, and encourage one another as a church family. Whether you're exploring faith for the first time or have been following Jesus for years, you're welcome to join us. Our services typically run for about 90 minutes and include contemporary worship music, biblical teaching, and opportunities to connect with others.</p>
+  </section>
+
+  <!-- Campus Cards / Join Us -->
+  <section class="campus-cards">
+    <h2>Join Us</h2>
+    <!-- Campus cards rendered dynamically from Payload CMS campuses collection -->
+  </section>
+
+</body>
+</html>

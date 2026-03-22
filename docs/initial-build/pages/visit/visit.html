@@ -1,0 +1,193 @@
+<!-- Source: https://www.ev.church/visit | Captured: 2026-03-22 | Rock CMS Page ID: 858 | Layout: FullWidthNarrow -->
+
+<header class="hero hero-interior">
+  <div class="container">
+    <h1>What to Expect</h1>
+    <p class="hero-subtitle">Plan your visit to Ev Church</p>
+  </div>
+</header>
+
+<main class="layout-full-width-narrow">
+
+  <!-- Campus Information -->
+  <section class="campus-info">
+    <div class="container">
+      <h2>Our Campuses</h2>
+      <div class="campus-grid">
+        <article class="campus-card">
+          <h3>North</h3>
+          <p class="service-time">Sunday 10:15am</p>
+          <address>9-11 Rothwell Ave, Rosedale</address>
+        </article>
+        <article class="campus-card">
+          <h3>Central</h3>
+          <p class="service-time">Sunday 10:15am</p>
+          <address>80 Olsen Ave, Hillsborough</address>
+        </article>
+        <article class="campus-card">
+          <h3>Unichurch</h3>
+          <p class="service-time">Sunday 5:15pm</p>
+          <address>Old Government House B102, Auckland Central</address>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- What to Expect -->
+  <section class="what-to-expect">
+    <div class="container">
+      <h2>What to Expect</h2>
+      <p>
+        Our services run for approximately <strong>90 minutes</strong> and the atmosphere is
+        exciting, casual, and relaxed.
+      </p>
+      <h3>A Typical Service Includes</h3>
+      <ol class="service-structure">
+        <li>Music (worship)</li>
+        <li>Announcements</li>
+        <li>Kids dismissal (morning services)</li>
+        <li>Bible reading</li>
+        <li>Pastoral message</li>
+        <li>Closing worship</li>
+      </ol>
+      <p>
+        Come as you are. Ev Church welcomes everyone regardless of background or where you are
+        on your faith journey.
+      </p>
+      <p>
+        After the service, stay for fellowship and refreshments. It's a great opportunity to
+        meet people and ask questions.
+      </p>
+    </div>
+  </section>
+
+  <!-- Kids Ministry -->
+  <section class="kids-ministry">
+    <div class="container">
+      <h2>Kids Ministry</h2>
+      <p>
+        Kids ministry is available at morning services for children from preschool through
+        intermediate age.
+      </p>
+      <p>
+        Children's check-in requires an extra <strong>10 minutes</strong> before the service
+        begins. First-time families should plan to arrive early to complete the registration
+        process.
+      </p>
+      <p>
+        Ev Church maintains safety protocols for all kids programs, ensuring a secure
+        environment for your children.
+      </p>
+    </div>
+  </section>
+
+  <!-- Visitor Registration Form -->
+  <section class="visitor-registration">
+    <div class="container">
+      <h2>Let Us Know You're Coming</h2>
+      <p>We'd love to connect with you. Fill out the form below and we'll be in touch.</p>
+
+      <form action="/api/visitor-registration" method="POST" class="registration-form">
+        <div class="form-group">
+          <label for="campus">Campus <span class="required">*</span></label>
+          <select id="campus" name="campus" required>
+            <option value="">Select a campus</option>
+            <option value="north">North</option>
+            <option value="central">Central</option>
+            <option value="unichurch">Unichurch</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="firstName">First Name <span class="required">*</span></label>
+            <input type="text" id="firstName" name="firstName" required />
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name <span class="required">*</span></label>
+            <input type="text" id="lastName" name="lastName" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email <span class="required">*</span></label>
+          <input type="email" id="email" name="email" required />
+        </div>
+
+        <div class="form-group">
+          <label for="mobile">Mobile Phone</label>
+          <input type="tel" id="mobile" name="mobile" placeholder="+64" />
+        </div>
+
+        <div class="form-group">
+          <label for="gender">Gender</label>
+          <select id="gender" name="gender">
+            <option value="">Select</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="prefer-not-to-say">Prefer not to say</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="hasSpouse" name="hasSpouse" />
+            I'd like to include my spouse's information
+          </label>
+        </div>
+
+        <fieldset class="spouse-info" id="spouseFields" hidden>
+          <legend>Spouse Information</legend>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="spouseFirstName">Spouse First Name</label>
+              <input type="text" id="spouseFirstName" name="spouseFirstName" />
+            </div>
+            <div class="form-group">
+              <label for="spouseLastName">Spouse Last Name</label>
+              <input type="text" id="spouseLastName" name="spouseLastName" />
+            </div>
+          </div>
+        </fieldset>
+
+        <button type="submit" class="btn btn-primary">Register</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Bottom Campus Cards -->
+  <section class="campus-cards-bottom">
+    <div class="container">
+      <h2>Find a Campus Near You</h2>
+      <div class="campus-grid">
+        <article class="campus-card">
+          <h3>North</h3>
+          <p class="service-time">Sunday 10:15am</p>
+          <address>9-11 Rothwell Ave, Rosedale</address>
+        </article>
+        <article class="campus-card">
+          <h3>Central</h3>
+          <p class="service-time">Sunday 10:15am</p>
+          <address>80 Olsen Ave, Hillsborough</address>
+        </article>
+        <article class="campus-card">
+          <h3>Unichurch</h3>
+          <p class="service-time">Sunday 5:15pm</p>
+          <address>Old Government House B102, Auckland Central</address>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Connect CTA -->
+  <section class="connect">
+    <div class="container">
+      <h2>Connect with Ev Church</h2>
+      <p>Wherever you are on your journey of faith, we'd love to hear from you.</p>
+      <div class="connect-ctas">
+        <a href="/contact" class="btn btn-primary">Contact Us</a>
+      </div>
+    </div>
+  </section>
+
+</main>
