@@ -63,7 +63,7 @@ function ScrollProgress() {
 }
 
 /* ─────────────── Desktop Dropdown ─────────────── */
-function DesktopDropdown({ item }: { item: NavItem }) {
+function DesktopDropdown({ item, scrolled }: { item: NavItem; scrolled: boolean }) {
   const [open, setOpen] = useState(false)
   const timeoutRef = useRef<ReturnType<typeof setTimeout>>(null)
 
@@ -83,7 +83,9 @@ function DesktopDropdown({ item }: { item: NavItem }) {
       onMouseLeave={handleLeave}
     >
       <button
-        className="flex items-center gap-1.5 px-3 py-2 text-[0.8125rem] font-semibold uppercase tracking-wide text-brand-black/80 transition-colors duration-200 hover:text-rich-red"
+        className={`flex items-center gap-1.5 px-3 py-2 text-[0.8125rem] font-semibold uppercase tracking-wide transition-colors duration-200 ${
+          scrolled ? 'text-brand-black/80 hover:text-rich-red' : 'text-white/90 hover:text-white'
+        }`}
         aria-expanded={open}
         aria-haspopup="true"
         onClick={() => setOpen(!open)}
@@ -295,7 +297,9 @@ export function Header() {
             className="group flex items-center gap-2"
             aria-label="Ev Church — return to home"
           >
-            <span className="text-xl font-black tracking-tight text-brand-black transition-colors group-hover:text-rich-red lg:text-[1.375rem]">
+            <span className={`text-xl font-black tracking-tight transition-colors lg:text-[1.375rem] ${
+              scrolled ? 'text-brand-black group-hover:text-rich-red' : 'text-white group-hover:text-white/80'
+            }`}>
               ev.church
             </span>
           </Link>
@@ -307,12 +311,14 @@ export function Header() {
           >
             {navItems.map((item) =>
               item.children ? (
-                <DesktopDropdown key={item.label} item={item} />
+                <DesktopDropdown key={item.label} item={item} scrolled={scrolled} />
               ) : (
                 <Link
                   key={item.label}
                   href={item.href}
-                  className="px-3 py-2 text-[0.8125rem] font-semibold uppercase tracking-wide text-brand-black/80 transition-colors duration-200 hover:text-rich-red"
+                  className={`px-3 py-2 text-[0.8125rem] font-semibold uppercase tracking-wide transition-colors duration-200 ${
+                    scrolled ? 'text-brand-black/80 hover:text-rich-red' : 'text-white/90 hover:text-white'
+                  }`}
                   {...(item.href.startsWith('http')
                     ? { target: '_blank', rel: 'noopener noreferrer' }
                     : {})}
@@ -325,7 +331,9 @@ export function Header() {
 
           {/* Mobile Hamburger */}
           <button
-            className="flex h-10 w-10 items-center justify-center rounded-full text-brand-black transition-colors hover:bg-warm-white lg:hidden"
+            className={`flex h-10 w-10 items-center justify-center rounded-full transition-colors lg:hidden ${
+              scrolled ? 'text-brand-black hover:bg-warm-white' : 'text-white hover:bg-white/10'
+            }`}
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-expanded={mobileOpen}
             aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
