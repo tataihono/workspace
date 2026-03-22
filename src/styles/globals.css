@@ -1,3 +1,9 @@
+/*
+ * Adobe Fonts (TypeKit) — project qtk2tpw
+ * Provides: Proxima Nova (sans) + Utopia (serif)
+ */
+@import url('https://use.typekit.net/qtk2tpw.css');
+
 @import 'tailwindcss';
 
 /*
@@ -58,9 +64,3 @@
   --blur-navbar: 12px;
   --blur-overlay: 40px;
 }
-
-/*
- * Adobe Fonts (TypeKit) — project qtk2tpw
- * Provides: Proxima Nova (sans) + Utopia (serif)
- */
-@import url('https://use.typekit.net/qtk2tpw.css');

@@ -1,4 +1,6 @@
 import type { ReactNode } from 'react'
+import { Header } from '@/components/layout/Header'
+import { Footer } from '@/components/layout/Footer'
 import '@/styles/globals.css'
 
 export const metadata = {
@@ -14,9 +16,9 @@ export default function FrontendLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body className="bg-white font-sans text-brand-black antialiased">
-        {/* Header will be added in Phase 2 */}
-        <main>{children}</main>
-        {/* Footer will be added in Phase 2 */}
+        <Header />
+        <main className="pt-20 lg:pt-[100px]">{children}</main>
+        <Footer />
       </body>
     </html>
   )
