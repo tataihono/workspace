@@ -5,8 +5,23 @@ import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { s3Storage } from '@payloadcms/storage-s3'
 import sharp from 'sharp'
+
+// Collections
 import { Users } from '@/collections/Users'
 import { Media } from '@/collections/Media'
+import { Pages } from '@/collections/Pages'
+import { BlogPosts } from '@/collections/BlogPosts'
+import { Announcements } from '@/collections/Announcements'
+import { Campuses } from '@/collections/Campuses'
+import { TeamMembers } from '@/collections/TeamMembers'
+import { Events } from '@/collections/Events'
+import { SermonSeries } from '@/collections/SermonSeries'
+import { ConnectGroups } from '@/collections/ConnectGroups'
+import { Registrations } from '@/collections/Registrations'
+
+// Globals
+import { Navigation } from '@/globals/Navigation'
+import { SiteSettings } from '@/globals/SiteSettings'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -31,9 +46,24 @@ export default buildConfig({
 
   sharp,
 
-  collections: [Users, Media],
+  collections: [
+    // Auth + media
+    Users,
+    Media,
+    // Content (block editor)
+    Pages,
+    BlogPosts,
+    Announcements,
+    // Synced from Rock RMS
+    Campuses,
+    TeamMembers,
+    Events,
+    SermonSeries,
+    ConnectGroups,
+    Registrations,
+  ],
 
-  globals: [],
+  globals: [Navigation, SiteSettings],
 
   plugins: [
     ...(process.env.S3_BUCKET

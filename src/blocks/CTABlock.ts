@@ -1,0 +1,52 @@
+import type { Block } from 'payload'
+
+export const CTABlock: Block = {
+  slug: 'cta',
+  interfaceName: 'CTABlock',
+  fields: [
+    {
+      name: 'heading',
+      type: 'text',
+      required: true,
+    },
+    {
+      name: 'text',
+      type: 'textarea',
+    },
+    {
+      name: 'buttons',
+      type: 'array',
+      maxRows: 2,
+      fields: [
+        {
+          name: 'label',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'href',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'variant',
+          type: 'select',
+          options: [
+            { label: 'Primary', value: 'primary' },
+            { label: 'Secondary', value: 'secondary' },
+          ],
+        },
+      ],
+    },
+    {
+      name: 'colorPreset',
+      type: 'select',
+      defaultValue: 'primary-red',
+      options: [
+        { label: 'Primary Red', value: 'primary-red' },
+        { label: 'Light', value: 'light' },
+        { label: 'Dark', value: 'dark' },
+      ],
+    },
+  ],
+}
