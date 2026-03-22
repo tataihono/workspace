@@ -10,7 +10,7 @@ type Props = {
 
 /**
  * Animates children into view when they enter the viewport.
- * Uses IntersectionObserver for performance — no scroll listeners.
+ * Uses IntersectionObserver for performance. No scroll listeners needed.
  */
 export function ScrollReveal({ children, className = '', delay = 0 }: Props) {
   const ref = useRef<HTMLDivElement>(null)

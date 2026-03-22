@@ -4,11 +4,11 @@ import { Button, ArrowRight } from '@/components/ui/Button'
 import { ScrollReveal } from '@/components/ui/ScrollReveal'
 
 export const metadata: Metadata = {
-  title: 'Ev Church — A Community of Christ-Followers in Auckland',
+  title: 'Ev Church | A Community of Christ-Followers in Auckland',
   description:
-    'Join Ev Church this Sunday at one of our three Auckland campuses — North, Central, or Unichurch. Everyone is welcome.',
+    'Join Ev Church this Sunday at one of our three Auckland campuses: North, Central, or Unichurch. Everyone is welcome.',
   openGraph: {
-    title: 'Ev Church — A Community of Christ-Followers in Auckland',
+    title: 'Ev Church | A Community of Christ-Followers in Auckland',
     description:
       'Join us this Sunday at one of our three Auckland campuses. Everyone is welcome.',
     url: 'https://ev.church',
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Ev Church — Auckland, New Zealand',
+    title: 'Ev Church | Auckland, New Zealand',
     description: 'A community of Christ-followers across Auckland.',
   },
   alternates: {
@@ -57,7 +57,7 @@ const nextSteps = [
   {
     title: 'Connect Groups',
     description:
-      'Small groups that meet during the week — a place to build real friendships and grow together.',
+      'Small groups that meet during the week. A place to build real friendships and grow together.',
     href: '/connect-groups',
   },
   {
@@ -110,7 +110,7 @@ export default function HomePage() {
             >
               Ev Church is a community of Christ-followers across Auckland.
               Whether you&apos;re exploring faith for the first time or
-              have been part of a church for years — you&apos;re welcome here.
+              have been part of a church for years, you&apos;re welcome here.
             </p>
 
             {/* CTAs */}
@@ -200,7 +200,7 @@ export default function HomePage() {
               At Ev Church, we believe everyone has a place. We&apos;re a
               diverse, multigenerational community united by a shared love for
               Jesus and each other. Our Sunday services are relaxed, engaging,
-              and designed to help you take your next step — wherever you are
+              and designed to help you take your next step, wherever you are
               on your journey.
             </p>
             <div className="mt-8">
@@ -285,17 +285,16 @@ export default function HomePage() {
               Everyone is welcome
             </h2>
             <p className="mt-5 text-lg leading-body-lg text-light-red-3">
-              We&apos;d love to meet you. Come as you are — no dress code, no
+              We&apos;d love to meet you. Come as you are. No dress code, no
               expectations. Just a warm community ready to welcome you.
             </p>
             <div className="mt-10">
-              <Button
+              <a
                 href="/visit"
-                size="large"
-                className="bg-white text-rich-red shadow-lg hover:bg-warm-white hover:shadow-xl"
+                className="inline-flex items-center justify-center rounded-md bg-white px-8 py-3.5 text-base font-semibold text-rich-red shadow-lg transition-all duration-200 hover:bg-warm-white hover:shadow-xl active:scale-[0.97]"
               >
                 Find a campus near you
-              </Button>
+              </a>
             </div>
           </ScrollReveal>
         </div>

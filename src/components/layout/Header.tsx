@@ -157,7 +157,7 @@ function MobileMenu({
 
       {/* Panel */}
       <div className="absolute right-0 top-0 h-full w-full max-w-sm overflow-y-auto bg-white shadow-2xl">
-        {/* Close button area — same height as header */}
+        {/* Close button area, same height as header */}
         <div className="flex h-20 items-center justify-end px-6">
           <button
             className="flex h-10 w-10 items-center justify-center rounded-full text-brand-black transition-colors hover:bg-warm-white"
@@ -268,7 +268,7 @@ export function Header() {
 
       setScrolled(y > 50)
 
-      // Near top of page — always show
+      // Near top of page, always show
       if (y < 120) {
         setHidden(false)
         accumulatedDelta = 0
@@ -317,7 +317,7 @@ export function Header() {
           <Link
             href="/"
             className="group flex items-center gap-2"
-            aria-label="Ev Church — return to home"
+            aria-label="Ev Church, return to home"
           >
             <span className={`text-xl font-black tracking-tight transition-colors lg:text-[1.375rem] ${
               scrolled ? 'text-brand-black group-hover:text-rich-red' : 'text-white group-hover:text-white/80'

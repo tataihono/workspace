@@ -8,7 +8,7 @@ import '@/styles/globals.css'
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://ev.church'),
   title: {
-    default: 'Ev Church — Auckland, New Zealand',
+    default: 'Ev Church | Auckland, New Zealand',
     template: '%s | Ev Church',
   },
   description:
@@ -36,13 +36,13 @@ export const metadata: Metadata = {
     locale: 'en_NZ',
     url: 'https://ev.church',
     siteName: 'Ev Church',
-    title: 'Ev Church — Auckland, New Zealand',
+    title: 'Ev Church | Auckland, New Zealand',
     description:
       'A community of Christ-followers across Auckland. Everyone is welcome.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Ev Church — Auckland, New Zealand',
+    title: 'Ev Church | Auckland, New Zealand',
     description:
       'A community of Christ-followers across Auckland. Everyone is welcome.',
   },
