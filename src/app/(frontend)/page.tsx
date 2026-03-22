@@ -73,14 +73,16 @@ export default function HomePage() {
     <>
       {/* ═══════════════ HERO ═══════════════ */}
       <section className="relative flex min-h-[85vh] items-center overflow-hidden bg-brand-black">
-        {/* Atmospheric gradient background */}
+        {/* Community photo background */}
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-brand-black via-dark-brown to-brand-black" />
-          {/* Subtle warm glow */}
-          <div className="absolute -right-32 -top-32 h-[500px] w-[500px] rounded-full bg-rich-red/8 blur-[120px]" />
-          <div className="absolute -bottom-24 -left-24 h-[400px] w-[400px] rounded-full bg-deep-red/6 blur-[100px]" />
-          {/* Noise texture overlay */}
-          <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23n)\' opacity=\'1\'/%3E%3C/svg%3E")', backgroundRepeat: 'repeat' }} />
+          <img
+            src="/images/homepage/carousel-0c59a44d.jpg"
+            alt=""
+            className="h-full w-full object-cover"
+          />
+          {/* Dark gradient overlay for text legibility */}
+          <div className="absolute inset-0 bg-gradient-to-r from-brand-black/80 via-brand-black/60 to-brand-black/30" />
+          <div className="absolute inset-0 bg-gradient-to-t from-brand-black/50 to-transparent" />
         </div>
 
         <div className="relative mx-auto max-w-[80rem] px-5 py-32 lg:px-8 lg:py-40">
@@ -133,8 +135,8 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Bottom fade to warm-white */}
-        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-warm-white to-transparent" />
+        {/* Bottom fade */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-warm-white to-transparent" />
       </section>
 
       {/* ═══════════════ CAMPUSES ═══════════════ */}
