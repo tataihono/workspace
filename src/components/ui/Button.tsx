@@ -25,10 +25,10 @@ export type ButtonProps = ButtonAsLink | ButtonAsButton
 
 const variantStyles: Record<Variant, string> = {
   primary:
-    'bg-rich-red text-white hover:bg-deep-red focus-visible:ring-rich-red',
+    'bg-rich-red text-white hover:bg-deep-red shadow-sm hover:shadow-md focus-visible:ring-rich-red',
   secondary:
     'border-2 border-rich-red text-rich-red hover:bg-rich-red hover:text-white focus-visible:ring-rich-red',
-  text: 'text-rich-red hover:underline focus-visible:ring-rich-red',
+  text: 'text-rich-red hover:text-deep-red focus-visible:ring-rich-red group',
 }
 
 const sizeStyles: Record<Size, string> = {
@@ -38,7 +38,7 @@ const sizeStyles: Record<Size, string> = {
 
 function buildClassName(variant: Variant, size: Size, extra?: string) {
   const base =
-    'inline-flex items-center justify-center font-semibold rounded-md transition-colors duration-200 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
+    'inline-flex items-center justify-center gap-2 font-semibold rounded-md transition-all duration-200 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
   const parts = [base, variantStyles[variant]]
   if (variant !== 'text') parts.push(sizeStyles[size])
   if (extra) parts.push(extra)
@@ -60,7 +60,7 @@ export const Button = forwardRef<
   const classes = buildClassName(variant, size, className)
 
   if ('href' in props && props.href) {
-    const { href, external, variant: _v, size: _s, ...anchorProps } = props as ButtonAsLink
+    const { href, external } = props as ButtonAsLink
     if (external || href.startsWith('http')) {
       return (
         <a
@@ -69,7 +69,7 @@ export const Button = forwardRef<
           target="_blank"
           rel="noopener noreferrer"
           className={classes}
-          {...anchorProps}
+          {...(rest as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
         >
           {children}
           <span className="sr-only"> (opens in new tab)</span>
@@ -81,7 +81,7 @@ export const Button = forwardRef<
         ref={ref as React.Ref<HTMLAnchorElement>}
         href={href}
         className={classes}
-        {...anchorProps}
+        {...(rest as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
       >
         {children}
       </Link>
@@ -98,3 +98,22 @@ export const Button = forwardRef<
     </button>
   )
 })
+
+/** Arrow icon for text-variant buttons */
+export function ArrowRight({ className = 'h-4 w-4' }: { className?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+      className={`${className} transition-transform duration-200 group-hover:translate-x-1`}
+      aria-hidden="true"
+    >
+      <path
+        fillRule="evenodd"
+        d="M3 10a.75.75 0 01.75-.75h10.638l-3.96-4.158a.75.75 0 111.08-1.04l5.25 5.5a.75.75 0 010 1.04l-5.25 5.5a.75.75 0 11-1.08-1.04l3.96-4.158H3.75A.75.75 0 013 10z"
+        clipRule="evenodd"
+      />
+    </svg>
+  )
+}

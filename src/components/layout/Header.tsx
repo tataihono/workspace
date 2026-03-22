@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 
 type NavItem = {
   label: string
@@ -16,8 +16,8 @@ const navItems: NavItem[] = [
     href: '/visit',
     children: [
       { label: 'What to Expect', href: '/visit' },
-      { label: 'North', href: '/campus/north' },
-      { label: 'Central', href: '/campus/central' },
+      { label: 'North Campus', href: '/campus/north' },
+      { label: 'Central Campus', href: '/campus/central' },
       { label: 'Unichurch', href: '/campus/unichurch' },
     ],
   },
@@ -38,6 +38,31 @@ const navItems: NavItem[] = [
   { label: 'Give', href: 'https://give.ev.church' },
 ]
 
+/* ─────────────── Scroll Progress Bar ─────────────── */
+function ScrollProgress() {
+  const [progress, setProgress] = useState(0)
+
+  useEffect(() => {
+    function onScroll() {
+      const scrollTop = window.scrollY
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight
+      setProgress(docHeight > 0 ? (scrollTop / docHeight) * 100 : 0)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  return (
+    <div className="fixed left-0 right-0 top-0 z-[60] h-[3px] bg-transparent">
+      <div
+        className="h-full bg-rich-red transition-[width] duration-100"
+        style={{ width: `${progress}%` }}
+      />
+    </div>
+  )
+}
+
+/* ─────────────── Desktop Dropdown ─────────────── */
 function DesktopDropdown({ item }: { item: NavItem }) {
   const [open, setOpen] = useState(false)
   const timeoutRef = useRef<ReturnType<typeof setTimeout>>(null)
@@ -48,7 +73,7 @@ function DesktopDropdown({ item }: { item: NavItem }) {
   }
 
   function handleLeave() {
-    timeoutRef.current = setTimeout(() => setOpen(false), 150)
+    timeoutRef.current = setTimeout(() => setOpen(false), 120)
   }
 
   return (
@@ -58,22 +83,24 @@ function DesktopDropdown({ item }: { item: NavItem }) {
       onMouseLeave={handleLeave}
     >
       <button
-        className="flex items-center gap-1 px-3 py-2 text-sm font-semibold text-brand-black transition-colors hover:text-rich-red"
+        className="flex items-center gap-1.5 px-3 py-2 text-[0.8125rem] font-semibold uppercase tracking-wide text-brand-black/80 transition-colors duration-200 hover:text-rich-red"
         aria-expanded={open}
         aria-haspopup="true"
         onClick={() => setOpen(!open)}
       >
         {item.label}
-        <ChevronDown className={`h-3.5 w-3.5 transition-transform ${open ? 'rotate-180' : ''}`} />
+        <ChevronDown
+          className={`h-3 w-3 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+        />
       </button>
       {open && (
-        <div className="absolute left-0 top-full pt-1">
-          <div className="min-w-48 rounded-md border border-cool-grey bg-white py-1 shadow-lg">
+        <div className="absolute left-1/2 top-full -translate-x-1/2 pt-2">
+          <div className="animate-slide-down min-w-52 overflow-hidden rounded-lg border border-warm-grey/60 bg-white py-2 shadow-xl shadow-brand-black/5">
             {item.children!.map((child) => (
               <Link
                 key={child.href}
                 href={child.href}
-                className="block px-4 py-2 text-sm text-dark-grey transition-colors hover:bg-warm-white hover:text-rich-red"
+                className="block px-5 py-2.5 text-sm text-dark-grey transition-all duration-150 hover:bg-warm-white hover:text-rich-red hover:pl-6"
                 onClick={() => setOpen(false)}
               >
                 {child.label}
@@ -86,6 +113,7 @@ function DesktopDropdown({ item }: { item: NavItem }) {
   )
 }
 
+/* ─────────────── Icons ─────────────── */
 function ChevronDown({ className }: { className?: string }) {
   return (
     <svg
@@ -104,25 +132,7 @@ function ChevronDown({ className }: { className?: string }) {
   )
 }
 
-function HamburgerIcon({ open }: { open: boolean }) {
-  return (
-    <svg
-      className="h-6 w-6"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={2}
-      stroke="currentColor"
-      aria-hidden="true"
-    >
-      {open ? (
-        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-      ) : (
-        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-      )}
-    </svg>
-  )
-}
-
+/* ─────────────── Mobile Menu ─────────────── */
 function MobileMenu({
   open,
   onClose,
@@ -135,110 +145,166 @@ function MobileMenu({
   if (!open) return null
 
   return (
-    <div className="fixed inset-0 top-20 z-40 overflow-y-auto bg-white lg:hidden">
-      <nav className="mx-auto max-w-lg px-6 py-6">
-        {navItems.map((item) => (
-          <div key={item.label} className="border-b border-cool-grey">
-            {item.children ? (
-              <>
-                <button
-                  className="flex w-full items-center justify-between py-4 text-base font-semibold text-brand-black"
-                  onClick={() =>
-                    setExpandedItem(
-                      expandedItem === item.label ? null : item.label,
-                    )
-                  }
-                  aria-expanded={expandedItem === item.label}
+    <div className="fixed inset-0 top-0 z-40 lg:hidden">
+      {/* Backdrop */}
+      <div
+        className="absolute inset-0 bg-brand-black/30 backdrop-blur-sm animate-fade-in"
+        onClick={onClose}
+        aria-hidden="true"
+      />
+
+      {/* Panel */}
+      <div className="absolute right-0 top-0 h-full w-full max-w-sm overflow-y-auto bg-white shadow-2xl">
+        {/* Close button area — same height as header */}
+        <div className="flex h-20 items-center justify-end px-6">
+          <button
+            className="flex h-10 w-10 items-center justify-center rounded-full text-brand-black transition-colors hover:bg-warm-white"
+            onClick={onClose}
+            aria-label="Close menu"
+          >
+            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <nav className="px-6 pb-8">
+          {navItems.map((item, i) => (
+            <div
+              key={item.label}
+              className="border-b border-cool-grey/60"
+              style={{ animationDelay: `${i * 50}ms` }}
+            >
+              {item.children ? (
+                <>
+                  <button
+                    className="flex w-full items-center justify-between py-5 text-[0.9375rem] font-semibold text-brand-black"
+                    onClick={() =>
+                      setExpandedItem(
+                        expandedItem === item.label ? null : item.label,
+                      )
+                    }
+                    aria-expanded={expandedItem === item.label}
+                  >
+                    {item.label}
+                    <ChevronDown
+                      className={`h-4 w-4 text-mid-grey transition-transform duration-200 ${
+                        expandedItem === item.label ? 'rotate-180' : ''
+                      }`}
+                    />
+                  </button>
+                  <div
+                    className={`grid transition-[grid-template-rows] duration-300 ${
+                      expandedItem === item.label
+                        ? 'grid-rows-[1fr]'
+                        : 'grid-rows-[0fr]'
+                    }`}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="pb-4 pl-4">
+                        {item.children.map((child) => (
+                          <Link
+                            key={child.href}
+                            href={child.href}
+                            className="block py-2.5 text-sm text-mid-grey transition-colors hover:text-rich-red"
+                            onClick={onClose}
+                          >
+                            {child.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <Link
+                  href={item.href}
+                  className="block py-5 text-[0.9375rem] font-semibold text-brand-black transition-colors hover:text-rich-red"
+                  onClick={onClose}
+                  {...(item.href.startsWith('http')
+                    ? { target: '_blank', rel: 'noopener noreferrer' }
+                    : {})}
                 >
                   {item.label}
-                  <ChevronDown
-                    className={`h-4 w-4 transition-transform ${expandedItem === item.label ? 'rotate-180' : ''}`}
-                  />
-                </button>
-                {expandedItem === item.label && (
-                  <div className="pb-3 pl-4">
-                    {item.children.map((child) => (
-                      <Link
-                        key={child.href}
-                        href={child.href}
-                        className="block py-2 text-sm text-dark-grey hover:text-rich-red"
-                        onClick={onClose}
-                      >
-                        {child.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </>
-            ) : (
-              <Link
-                href={item.href}
-                className="block py-4 text-base font-semibold text-brand-black hover:text-rich-red"
-                onClick={onClose}
-                {...(item.href.startsWith('http')
-                  ? { target: '_blank', rel: 'noopener noreferrer' }
-                  : {})}
-              >
-                {item.label}
-              </Link>
-            )}
+                </Link>
+              )}
+            </div>
+          ))}
+
+          {/* Mobile CTA */}
+          <div className="mt-8">
+            <Link
+              href="/visit"
+              className="block w-full rounded-md bg-rich-red py-3.5 text-center text-sm font-semibold text-white shadow-sm transition-colors hover:bg-deep-red"
+              onClick={onClose}
+            >
+              Plan Your Visit
+            </Link>
           </div>
-        ))}
-      </nav>
+        </nav>
+      </div>
     </div>
   )
 }
 
+/* ─────────────── Header ─────────────── */
 export function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [hidden, setHidden] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const lastScrollY = useRef(0)
 
-  useEffect(() => {
-    function onScroll() {
-      const y = window.scrollY
-      setScrolled(y > 50)
-      if (y > 100) {
-        setHidden(y > lastScrollY.current)
-      } else {
-        setHidden(false)
-      }
-      lastScrollY.current = y
+  const onScroll = useCallback(() => {
+    const y = window.scrollY
+    setScrolled(y > 50)
+    if (y > 120) {
+      setHidden(y > lastScrollY.current && y - lastScrollY.current > 5)
+    } else {
+      setHidden(false)
     }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    lastScrollY.current = y
   }, [])
 
-  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [onScroll])
+
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : ''
-    return () => {
-      document.body.style.overflow = ''
-    }
+    return () => { document.body.style.overflow = '' }
   }, [mobileOpen])
 
   return (
     <>
+      <ScrollProgress />
+
       <header
         className={`fixed left-0 right-0 top-0 z-50 transition-all duration-300 ${
           hidden && !mobileOpen ? '-translate-y-full' : 'translate-y-0'
         } ${
           scrolled || mobileOpen
-            ? 'bg-white/80 shadow-sm backdrop-blur-[12px]'
-            : 'bg-white/0'
+            ? 'bg-white/90 shadow-sm shadow-brand-black/5 backdrop-blur-[12px]'
+            : 'bg-transparent'
         }`}
       >
-        <div className="mx-auto flex h-20 max-w-[80rem] items-center justify-between px-4 lg:h-[100px] lg:px-8">
+        <div className="mx-auto flex h-20 max-w-[80rem] items-center justify-between px-5 lg:h-[100px] lg:px-8">
           {/* Logo */}
-          <Link href="/" className="flex-shrink-0" aria-label="Ev Church home">
-            <span className="text-xl font-bold text-brand-black lg:text-2xl">
+          <Link
+            href="/"
+            className="group flex items-center gap-2"
+            aria-label="Ev Church — return to home"
+          >
+            <span className="text-xl font-black tracking-tight text-brand-black transition-colors group-hover:text-rich-red lg:text-[1.375rem]">
               ev.church
             </span>
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden items-center gap-1 lg:flex" aria-label="Main navigation">
+          <nav
+            className="hidden items-center gap-0.5 lg:flex"
+            aria-label="Main navigation"
+          >
             {navItems.map((item) =>
               item.children ? (
                 <DesktopDropdown key={item.label} item={item} />
@@ -246,7 +312,7 @@ export function Header() {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className="px-3 py-2 text-sm font-semibold text-brand-black transition-colors hover:text-rich-red"
+                  className="px-3 py-2 text-[0.8125rem] font-semibold uppercase tracking-wide text-brand-black/80 transition-colors duration-200 hover:text-rich-red"
                   {...(item.href.startsWith('http')
                     ? { target: '_blank', rel: 'noopener noreferrer' }
                     : {})}
@@ -259,12 +325,25 @@ export function Header() {
 
           {/* Mobile Hamburger */}
           <button
-            className="flex h-10 w-10 items-center justify-center rounded-md text-brand-black lg:hidden"
+            className="flex h-10 w-10 items-center justify-center rounded-full text-brand-black transition-colors hover:bg-warm-white lg:hidden"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-expanded={mobileOpen}
             aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
           >
-            <HamburgerIcon open={mobileOpen} />
+            <svg
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+              />
+            </svg>
           </button>
         </div>
       </header>
