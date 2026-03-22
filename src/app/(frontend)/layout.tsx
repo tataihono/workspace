@@ -68,7 +68,7 @@ export default function FrontendLayout({ children }: { children: ReactNode }) {
       </head>
       <body className="bg-warm-white font-sans text-brand-black antialiased">
         <Header />
-        <main className="pt-20 lg:pt-[100px]">{children}</main>
+        <main>{children}</main>
         <Footer />
       </body>
     </html>
