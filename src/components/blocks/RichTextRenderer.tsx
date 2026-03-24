@@ -50,7 +50,7 @@ function renderNode(node: LexicalNode, index: number): React.ReactNode {
 
   // Paragraph
   if (node.type === 'paragraph') {
-    return <p key={index}>{children}</p>
+    return <p key={index} className="mb-4 last:mb-0">{children}</p>
   }
 
   // Heading
