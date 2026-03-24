@@ -1,7 +1,8 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
-import path from 'path'
-import fs from 'fs'
+import { resolve, dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { existsSync } from 'node:fs'
 
 /* ------------------------------------------------------------------ */
 /*  Helpers                                                           */
@@ -39,18 +40,20 @@ interface ImageEntry {
   alt: string
 }
 
-const IMAGES_ROOT = path.resolve(__dirname, '../../public/images')
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+const IMAGES_ROOT = resolve(__dirname, '../../public/images')
 
 const imageManifest: ImageEntry[] = [
   // Homepage carousel images
   { key: 'carousel-0c59a44d', filePath: 'homepage/carousel-0c59a44d.jpg', alt: 'Ev Church community gathering' },
   { key: 'carousel-146c7f7e', filePath: 'homepage/carousel-146c7f7e.jpg', alt: 'Ev Church community celebration' },
   { key: 'carousel-168f386e', filePath: 'homepage/carousel-168f386e.jpg', alt: 'Kids enjoying activities at Ev Church' },
-  { key: 'carousel-2c75cbf3', filePath: 'homepage/carousel-2c75cbf3.jpg', alt: 'Community life at Ev Church' },
+  { key: 'carousel-168f386e', filePath: 'homepage/carousel-168f386e.jpg', alt: 'Community life at Ev Church' },
   { key: 'carousel-3c68ddf1', filePath: 'homepage/carousel-3c68ddf1.jpg', alt: 'Families at Ev Church' },
-  { key: 'carousel-4e35f42e', filePath: 'homepage/carousel-4e35f42e.jpg', alt: 'People connecting at Ev Church' },
+  { key: 'carousel-3c68ddf1', filePath: 'homepage/carousel-3c68ddf1.jpg', alt: 'People connecting at Ev Church' },
   { key: 'carousel-5940ca71', filePath: 'homepage/carousel-5940ca71.jpg', alt: 'Friends laughing in community' },
-  { key: 'carousel-5e2f5c9a', filePath: 'homepage/carousel-5e2f5c9a.jpg', alt: 'Worship at Ev Church' },
+  { key: 'carousel-c645786c', filePath: 'homepage/carousel-c645786c.jpg', alt: 'Worship at Ev Church' },
   { key: 'carousel-70ac2785', filePath: 'homepage/carousel-70ac2785.jpg', alt: 'Ev Church North campus' },
   { key: 'carousel-79cef650', filePath: 'homepage/carousel-79cef650.jpg', alt: 'Children at Ev Church' },
   { key: 'carousel-89a3395d', filePath: 'homepage/carousel-89a3395d.jpg', alt: 'Community at Ev Church' },
@@ -59,7 +62,7 @@ const imageManifest: ImageEntry[] = [
   { key: 'carousel-aea4638f', filePath: 'homepage/carousel-aea4638f.jpg', alt: 'Community gathering with children' },
   { key: 'carousel-c645786c', filePath: 'homepage/carousel-c645786c.jpg', alt: 'People enjoying time together at Ev Church' },
   { key: 'carousel-c842f7b4', filePath: 'homepage/carousel-c842f7b4.jpg', alt: 'Warm community gathering' },
-  { key: 'carousel-d3b2d72e', filePath: 'homepage/carousel-d3b2d72e.jpg', alt: 'People laughing together at Ev Church' },
+  { key: 'carousel-9a8d8943', filePath: 'homepage/carousel-9a8d8943.jpg', alt: 'People laughing together at Ev Church' },
   { key: 'carousel-db9ac570', filePath: 'homepage/carousel-db9ac570.jpg', alt: 'Small group discussion at Ev Church' },
 
   // Campus images
@@ -98,8 +101,8 @@ async function seed() {
   console.log('Uploading images...')
 
   for (const entry of imageManifest) {
-    const fullPath = path.join(IMAGES_ROOT, entry.filePath)
-    if (!fs.existsSync(fullPath)) {
+    const fullPath = join(IMAGES_ROOT, entry.filePath)
+    if (!existsSync(fullPath)) {
       console.warn(`  Skipping missing file: ${entry.filePath}`)
       continue
     }
@@ -130,14 +133,14 @@ async function seed() {
     }
   }
 
-  /** Get a media ID from the map, with a fallback warning. */
+  /** Get a media ID from the map, with a fallback to the first available image. */
   function img(key: string): number {
     const id = mediaMap.get(key)
-    if (!id) {
-      console.warn(`  Warning: no media found for key "${key}"`)
-      return 0
-    }
-    return id
+    if (id) return id
+    // Fallback to first available image
+    const fallback = mediaMap.values().next().value
+    console.warn(`  Warning: no media for "${key}", using fallback id ${fallback}`)
+    return fallback ?? 1
   }
 
   /* ======================== Seed pages ============================ */
@@ -317,10 +320,10 @@ async function seed() {
         blockType: 'photoStrip',
         layout: 'grid4',
         images: [
-          { image: img('carousel-4e35f42e') },
-          { image: img('carousel-5e2f5c9a') },
-          { image: img('carousel-2c75cbf3') },
-          { image: img('carousel-d3b2d72e') },
+          { image: img('carousel-3c68ddf1') },
+          { image: img('carousel-c645786c') },
+          { image: img('carousel-168f386e') },
+          { image: img('carousel-9a8d8943') },
         ],
       },
       {
@@ -534,10 +537,10 @@ async function seed() {
         blockType: 'photoStrip',
         layout: 'grid4',
         images: [
-          { image: img('carousel-4e35f42e') },
-          { image: img('carousel-5e2f5c9a') },
-          { image: img('carousel-2c75cbf3') },
-          { image: img('carousel-d3b2d72e') },
+          { image: img('carousel-3c68ddf1') },
+          { image: img('carousel-c645786c') },
+          { image: img('carousel-168f386e') },
+          { image: img('carousel-9a8d8943') },
         ],
       },
       {
@@ -857,7 +860,7 @@ async function seed() {
         blockType: 'photoStrip',
         layout: 'grid4',
         images: [
-          { image: img('carousel-4e35f42e') },
+          { image: img('carousel-3c68ddf1') },
           { image: img('carousel-89a3395d') },
           { image: img('carousel-8aae1142') },
           { image: img('carousel-c842f7b4') },
@@ -947,7 +950,7 @@ async function seed() {
         blockType: 'photoStrip',
         layout: 'grid4',
         images: [
-          { image: img('carousel-5e2f5c9a') },
+          { image: img('carousel-c645786c') },
           { image: img('carousel-9a8d8943') },
           { image: img('carousel-c645786c') },
           { image: img('carousel-db9ac570') },
@@ -1048,7 +1051,7 @@ async function seed() {
         blockType: 'photoStrip',
         layout: 'grid4',
         images: [
-          { image: img('carousel-4e35f42e') },
+          { image: img('carousel-3c68ddf1') },
           { image: img('carousel-9a8d8943') },
           { image: img('carousel-aea4638f') },
           { image: img('carousel-c645786c') },
@@ -1171,8 +1174,8 @@ async function seed() {
         images: [
           { image: img('carousel-0c59a44d') },
           { image: img('carousel-5940ca71') },
-          { image: img('carousel-2c75cbf3') },
-          { image: img('carousel-d3b2d72e') },
+          { image: img('carousel-168f386e') },
+          { image: img('carousel-9a8d8943') },
         ],
       },
       {
