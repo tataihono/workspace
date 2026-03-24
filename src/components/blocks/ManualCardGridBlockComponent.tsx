@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import { ScrollReveal } from '@/components/ui/ScrollReveal'
 import { Button, ArrowRight } from '@/components/ui/Button'
@@ -36,10 +35,16 @@ interface ManualCardGridBlockProps {
   cards: ManualCard[]
 }
 
-function getImageData(image: CardImage | string | null | undefined) {
-  if (!image) return null
-  if (typeof image === 'string') return { url: image, alt: '', width: 1200, height: 800 }
-  return image
+function getImageUrl(image: CardImage | string | null | undefined): string {
+  if (!image) return ''
+  if (typeof image === 'string') return image
+  return image.url
+}
+
+function getImageAlt(image: CardImage | string | null | undefined): string {
+  if (!image) return ''
+  if (typeof image === 'string') return ''
+  return image.alt
 }
 
 const columnClasses: Record<number, string> = {
@@ -48,64 +53,98 @@ const columnClasses: Record<number, string> = {
   4: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4',
 }
 
-function InfoCard({ card, index }: { card: ManualCard; index: number }) {
+/** Inline arrow SVG used in card link labels */
+function ArrowSvg() {
   return (
-    <ScrollReveal delay={index * 80}>
-      <div className="rounded-xl border border-warm-grey/20 bg-white p-6">
-        <h3 className="font-serif text-xl text-brand-black">{card.title}</h3>
-        {card.subtitle && (
-          <p className="mt-1 text-sm font-semibold text-rich-red">{card.subtitle}</p>
-        )}
-        {card.description && (
-          <p className="mt-3 text-sm leading-relaxed text-dark-grey">{card.description}</p>
-        )}
-        {card.details && card.details.length > 0 && (
-          <dl className="mt-4 space-y-2">
-            {card.details.map((row, i) => (
-              <div key={i} className="flex justify-between text-sm">
-                <dt className="font-medium text-brand-black">{row.label}</dt>
-                <dd className="text-mid-grey">{row.value}</dd>
-              </div>
-            ))}
-          </dl>
-        )}
-      </div>
+    <svg
+      className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={2.5}
+      stroke="currentColor"
+      aria-hidden="true"
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+    </svg>
+  )
+}
+
+function InfoCard({ card, index }: { card: ManualCard; index: number }) {
+  const content = (
+    <div className="group relative block overflow-hidden rounded-xl border border-warm-grey/60 bg-white p-8 transition-all duration-300 hover:border-rich-red/20 hover:shadow-lg hover:shadow-rich-red/5">
+      {/* Accent bar */}
+      <div className="absolute left-0 top-0 h-1 w-full bg-gradient-to-r from-rich-red to-light-red-1 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
+      <h3 className="font-sans text-h4 font-bold text-brand-black">{card.title}</h3>
+      {card.subtitle && (
+        <p className="mt-2 text-sm text-mid-grey">{card.subtitle}</p>
+      )}
+      {card.description && (
+        <p className="mt-3 flex-1 text-[0.9375rem] leading-relaxed text-mid-grey">
+          {card.description}
+        </p>
+      )}
+      {card.details && card.details.length > 0 && (
+        <dl className="mt-4 space-y-2">
+          {card.details.map((row, i) => (
+            <div key={i} className="flex justify-between text-sm">
+              <dt className="font-medium text-brand-black">{row.label}</dt>
+              <dd className="text-mid-grey">{row.value}</dd>
+            </div>
+          ))}
+        </dl>
+      )}
+      {card.linkLabel && (
+        <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-rich-red transition-colors group-hover:text-deep-red">
+          {card.linkLabel}
+          <ArrowSvg />
+        </span>
+      )}
+    </div>
+  )
+
+  return (
+    <ScrollReveal delay={index * 100}>
+      {card.href ? <Link href={card.href} className="group relative block">{content}</Link> : content}
     </ScrollReveal>
   )
 }
 
 function ImageOverlayCard({ card, index }: { card: ManualCard; index: number }) {
-  const img = getImageData(card.image)
+  const url = getImageUrl(card.image)
+  const alt = getImageAlt(card.image)
+
   const content = (
-    <div className="group relative aspect-[3/4] overflow-hidden rounded-xl sm:aspect-[4/5]">
-      {img && (
-        <Image
-          src={img.url}
-          alt={img.alt}
-          fill
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+    <div className="group relative block aspect-[3/4] overflow-hidden rounded-xl sm:aspect-[4/5]">
+      {url && (
+        <img
+          src={url}
+          alt={alt}
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
       )}
       {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/40 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/40 via-40% to-transparent transition-opacity duration-300 group-hover:opacity-90" />
 
       {/* Content anchored to bottom */}
-      <div className="absolute inset-x-0 bottom-0 p-6 lg:p-8">
+      <div className="relative flex h-full flex-col justify-end p-7">
         {card.eyebrow && (
-          <p className="text-xs font-semibold uppercase tracking-widest text-light-red-2">
+          <p className="text-xs font-semibold uppercase tracking-[0.15em] text-light-red-2">
             {card.eyebrow}
           </p>
         )}
-        <h3 className="mt-2 font-serif text-2xl text-white">{card.title}</h3>
+        <h3 className="mt-2 font-serif text-h2 font-normal leading-tight text-white">{card.title}</h3>
         {card.subtitle && (
-          <p className="mt-1 text-sm text-warm-white/70">{card.subtitle}</p>
+          <p className="mt-2 text-sm font-medium text-warm-white/70">{card.subtitle}</p>
         )}
         {card.address && (
-          <p className="mt-2 text-xs text-warm-white/50">{card.address}</p>
+          <p className="mt-1 text-xs text-warm-white/50">{card.address}</p>
         )}
         {card.linkLabel && (
-          <p className="mt-3 text-sm font-semibold text-white">{card.linkLabel}</p>
+          <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-white transition-colors group-hover:text-light-red-2">
+            {card.linkLabel}
+            <ArrowSvg />
+          </span>
         )}
       </div>
     </div>
@@ -113,37 +152,41 @@ function ImageOverlayCard({ card, index }: { card: ManualCard; index: number }) 
 
   return (
     <ScrollReveal delay={index * 100}>
-      {card.href ? <Link href={card.href}>{content}</Link> : content}
+      {card.href ? <Link href={card.href} className="group relative block">{content}</Link> : content}
     </ScrollReveal>
   )
 }
 
 function ImageTopCard({ card, index }: { card: ManualCard; index: number }) {
-  const img = getImageData(card.image)
+  const url = getImageUrl(card.image)
+  const alt = getImageAlt(card.image)
+
   const content = (
-    <div className="group overflow-hidden rounded-xl">
+    <div className="group relative block overflow-hidden rounded-xl">
       {/* Image */}
       <div className="aspect-[16/10] overflow-hidden">
-        {img && (
-          <Image
-            src={img.url}
-            alt={img.alt}
-            fill
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+        {url ? (
+          <img
+            src={url}
+            alt={alt}
+            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
+        ) : (
+          <div className="h-full w-full bg-warm-grey/20" />
         )}
-        {!img && <div className="h-full w-full bg-warm-grey/20" />}
       </div>
 
       {/* Dark content panel */}
-      <div className="bg-brand-black p-6 lg:p-8">
-        <h3 className="font-serif text-xl text-white">{card.title}</h3>
+      <div className="bg-brand-black p-7">
+        <h3 className="font-serif text-h4 font-normal text-white">{card.title}</h3>
         {card.description && (
-          <p className="mt-2 text-sm leading-relaxed text-warm-grey/70">{card.description}</p>
+          <p className="mt-2 text-sm leading-relaxed text-warm-grey/60">{card.description}</p>
         )}
         {card.linkLabel && (
-          <p className="mt-4 text-sm font-semibold text-light-red-2">{card.linkLabel}</p>
+          <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-light-red-2 transition-colors group-hover:text-white">
+            {card.linkLabel}
+            <ArrowSvg />
+          </span>
         )}
       </div>
     </div>
@@ -151,13 +194,14 @@ function ImageTopCard({ card, index }: { card: ManualCard; index: number }) {
 
   return (
     <ScrollReveal delay={index * 100}>
-      {card.href ? <Link href={card.href}>{content}</Link> : content}
+      {card.href ? <Link href={card.href} className="group relative block">{content}</Link> : content}
     </ScrollReveal>
   )
 }
 
 function AlternatingRowCard({ card, index }: { card: ManualCard; index: number }) {
-  const img = getImageData(card.image)
+  const url = getImageUrl(card.image)
+  const alt = getImageAlt(card.image)
   const isEven = index % 2 === 1
 
   return (
@@ -169,28 +213,27 @@ function AlternatingRowCard({ card, index }: { card: ManualCard; index: number }
       >
         {/* Image */}
         <div className="lg:[direction:ltr]">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
-            {img && (
-              <Image
-                src={img.url}
-                alt={img.alt}
-                fill
-                className="object-cover transition-transform duration-500 hover:scale-105"
-                sizes="(max-width: 1024px) 100vw, 50vw"
+          <div className="aspect-[4/3] overflow-hidden rounded-xl">
+            {url ? (
+              <img
+                src={url}
+                alt={alt}
+                className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
               />
+            ) : (
+              <div className="h-full w-full bg-warm-grey/20" />
             )}
-            {!img && <div className="h-full w-full bg-warm-grey/20" />}
           </div>
         </div>
 
         {/* Text */}
         <div className="lg:[direction:ltr]">
           {card.eyebrow && (
-            <p className="text-sm font-semibold uppercase tracking-widest text-rich-red">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-rich-red">
               {card.eyebrow}
             </p>
           )}
-          <h2 className="mt-3 font-serif text-[length:var(--text-h3)] leading-[var(--leading-heading)] text-brand-black">
+          <h2 className="mt-3 font-serif text-h3 font-normal leading-heading text-brand-black">
             {card.title}
           </h2>
           {card.description && (
@@ -223,40 +266,38 @@ export function ManualCardGridBlockComponent({
   const isAlternating = cardStyle === 'alternatingRows'
 
   return (
-    <section className="bg-warm-white py-20 lg:py-28">
-      <div className="mx-auto max-w-[80rem] px-5 lg:px-8">
-        {/* Section header */}
+    <section className="bg-warm-white px-5 py-24 lg:px-8 lg:py-32">
+      <div className="mx-auto max-w-[80rem]">
+        {/* Section header — left aligned */}
         {(eyebrow || heading || description) && (
           <ScrollReveal>
-            <div className="mb-16 text-center">
-              {eyebrow && (
-                <p className="text-sm font-semibold uppercase tracking-widest text-rich-red">
-                  {eyebrow}
-                </p>
-              )}
-              {heading && (
-                <h2 className="mt-4 font-serif text-[length:var(--text-h2)] leading-[var(--leading-heading)] text-brand-black">
-                  {heading}
-                </h2>
-              )}
-              {description && (
-                <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-dark-grey">
-                  {description}
-                </p>
-              )}
-            </div>
+            {eyebrow && (
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-rich-red">
+                {eyebrow}
+              </p>
+            )}
+            {heading && (
+              <h2 className="mt-3 text-h2 font-normal leading-heading text-brand-black">
+                {heading}
+              </h2>
+            )}
+            {description && (
+              <p className="mt-4 max-w-xl text-[0.9375rem] leading-relaxed text-dark-grey">
+                {description}
+              </p>
+            )}
           </ScrollReveal>
         )}
 
         {/* Cards */}
         {isAlternating ? (
-          <div className="space-y-20 lg:space-y-28">
+          <div className="mt-12 space-y-20 lg:space-y-28">
             {cards.map((card, i) => (
               <AlternatingRowCard key={i} card={card} index={i} />
             ))}
           </div>
         ) : (
-          <div className={`grid gap-8 ${columnClasses[columns ?? 3]}`}>
+          <div className={`mt-12 grid gap-6 ${columnClasses[columns ?? 3]}`}>
             {cards.map((card, i) => {
               switch (cardStyle) {
                 case 'info':

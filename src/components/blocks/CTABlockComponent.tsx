@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/Button'
+import { ScrollReveal } from '@/components/ui/ScrollReveal'
 
 interface CTAButton {
   label: string
@@ -12,102 +13,132 @@ type ColorPreset = 'primary-red' | 'light' | 'dark'
 interface CTABlockProps {
   heading: string
   text?: string | null
+  supportingText?: string | null
   buttons?: CTAButton[] | null
   colorPreset?: ColorPreset | null
+  accentColor?: string | null
 }
 
-const presetStyles: Record<ColorPreset, { section: string; heading: string; body: string; overlay: boolean }> = {
-  'primary-red': {
-    section: 'bg-rich-red',
-    heading: 'text-white',
-    body: 'text-white/90',
-    overlay: true,
-  },
-  light: {
-    section: 'bg-warm-white',
-    heading: 'text-brand-black',
-    body: 'text-dark-grey',
-    overlay: false,
-  },
-  dark: {
-    section: 'bg-brand-black',
-    heading: 'text-white',
-    body: 'text-warm-white/80',
-    overlay: true,
-  },
-}
-
-/** Map button variants so they remain legible against each color preset */
-function resolveButtonVariant(
-  declared: 'primary' | 'secondary' | undefined,
-  preset: ColorPreset,
-): 'primary' | 'secondary' | 'text' {
-  if (preset === 'primary-red') {
-    return declared === 'secondary' ? 'secondary' : 'text'
-  }
-  return declared ?? 'primary'
-}
+const NOISE_TEXTURE =
+  'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23n)\' opacity=\'1\'/%3E%3C/svg%3E")'
 
 export function CTABlockComponent({
   heading,
   text,
+  supportingText,
   buttons,
   colorPreset = 'primary-red',
+  accentColor,
 }: CTABlockProps) {
   const preset = colorPreset ?? 'primary-red'
-  const styles = presetStyles[preset]
+
+  // Determine background color — accentColor overrides preset
+  const bgColor = accentColor ?? (preset === 'primary-red' ? 'bg-rich-red' : preset === 'dark' ? 'bg-brand-black' : 'bg-warm-white')
+  const useCustomBg = !!accentColor
+  const isColored = preset === 'primary-red' || preset === 'dark' || useCustomBg
 
   return (
-    <section className={`relative overflow-hidden ${styles.section}`}>
-      {/* Texture overlay for colored backgrounds */}
-      {styles.overlay && (
+    <section
+      className={`relative overflow-hidden px-5 py-20 lg:px-8 lg:py-28 ${useCustomBg ? '' : bgColor}`}
+      style={useCustomBg ? { backgroundColor: accentColor } : undefined}
+    >
+      {/* Subtle noise texture for colored backgrounds */}
+      {isColored && (
         <div
-          className="pointer-events-none absolute inset-0 opacity-[0.04]"
-          style={{
-            backgroundImage:
-              'url("data:image/svg+xml,%3Csvg width=\'40\' height=\'40\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M0 0h40v40H0z\' fill=\'none\'/%3E%3Ccircle cx=\'20\' cy=\'20\' r=\'1\' fill=\'white\'/%3E%3C/svg%3E")',
-          }}
+          className="absolute inset-0 opacity-[0.04]"
+          style={{ backgroundImage: NOISE_TEXTURE, backgroundRepeat: 'repeat' }}
         />
       )}
 
-      <div className="relative z-10 mx-auto max-w-4xl px-6 py-20 text-center sm:px-8 lg:py-28">
-        <h2
-          className={`font-serif text-[length:var(--text-h2)] leading-[var(--leading-heading)] ${styles.heading}`}
-        >
-          {heading}
-        </h2>
+      {/* Warm glow */}
+      {isColored && (
+        <div className="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-white/5 blur-[80px]" />
+      )}
 
-        {text && (
-          <p className={`mx-auto mt-6 max-w-2xl text-lg leading-relaxed ${styles.body}`}>
-            {text}
-          </p>
-        )}
+      <div className="relative mx-auto max-w-2xl text-center">
+        <ScrollReveal>
+          <h2
+            className={`font-serif text-h1 font-normal leading-display ${
+              isColored ? 'text-white' : 'text-brand-black'
+            }`}
+          >
+            {heading}
+          </h2>
 
-        {buttons && buttons.length > 0 && (
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            {buttons.map((btn) => {
-              const variant = resolveButtonVariant(btn.variant, preset)
-              const buttonClasses =
-                preset === 'primary-red' && variant !== 'secondary'
-                  ? 'bg-white text-rich-red hover:bg-warm-white'
-                  : preset === 'dark' && variant === 'secondary'
-                    ? 'border-white text-white hover:bg-white hover:text-brand-black'
-                    : undefined
+          {text && (
+            <p
+              className={`mt-5 text-lg leading-body-lg ${
+                preset === 'primary-red' && !useCustomBg
+                  ? 'text-light-red-3'
+                  : isColored
+                    ? 'text-white/80'
+                    : 'text-dark-grey'
+              }`}
+            >
+              {text}
+            </p>
+          )}
 
-              return (
-                <Button
-                  key={btn.id ?? btn.href}
-                  href={btn.href}
-                  variant={variant}
-                  size="large"
-                  className={buttonClasses}
-                >
-                  {btn.label}
-                </Button>
-              )
-            })}
-          </div>
-        )}
+          {supportingText && (
+            <p
+              className={`mt-3 text-sm ${
+                isColored ? 'text-white/60' : 'text-mid-grey'
+              }`}
+            >
+              {supportingText}
+            </p>
+          )}
+
+          {buttons && buttons.length > 0 && (
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+              {buttons.map((btn, index) => {
+                if (index === 0 && isColored) {
+                  // Primary button on colored bg — white pill
+                  const textColor = useCustomBg
+                    ? undefined
+                    : preset === 'primary-red'
+                      ? 'text-rich-red'
+                      : 'text-brand-black'
+                  return (
+                    <a
+                      key={btn.id ?? btn.href}
+                      href={btn.href}
+                      className={`inline-flex items-center justify-center rounded-md bg-white px-8 py-3.5 text-base font-semibold shadow-lg transition-all duration-200 hover:bg-warm-white hover:shadow-xl active:scale-[0.97] ${textColor ?? ''}`}
+                      style={useCustomBg ? { color: accentColor } : undefined}
+                    >
+                      {btn.label}
+                    </a>
+                  )
+                }
+
+                if (index > 0 && isColored) {
+                  // Secondary button on colored bg — text variant
+                  return (
+                    <Button
+                      key={btn.id ?? btn.href}
+                      href={btn.href}
+                      variant="text"
+                      className="text-white/90 hover:text-white"
+                    >
+                      {btn.label}
+                    </Button>
+                  )
+                }
+
+                // Light preset buttons
+                return (
+                  <Button
+                    key={btn.id ?? btn.href}
+                    href={btn.href}
+                    variant={btn.variant === 'secondary' ? 'secondary' : 'primary'}
+                  >
+                    {btn.label}
+                  </Button>
+                )
+              })}
+            </div>
+          )}
+        </ScrollReveal>
       </div>
     </section>
   )

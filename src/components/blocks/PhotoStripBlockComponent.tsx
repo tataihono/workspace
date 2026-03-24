@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { ScrollReveal } from '@/components/ui/ScrollReveal'
 
 interface PhotoImage {
@@ -18,39 +17,46 @@ function getAlt(img: PhotoImage): string {
   return typeof img.image === 'string' ? '' : img.image?.alt ?? ''
 }
 
+/** Staggered height/margin pairs for horizontal scroll — matches original design */
 const heightPatterns = [
+  'h-72 lg:h-96',
+  'h-56 lg:h-72',
+  'h-64 lg:h-80',
   'h-72 lg:h-96',
   'h-56 lg:h-72',
   'h-64 lg:h-80',
 ] as const
 
 const marginPatterns = [
-  'mt-0',
-  'mt-8',
+  '',
+  'mt-10',
   'mt-4',
+  'mt-8',
+  'mt-12',
+  'mt-2',
 ] as const
+
+const delayPatterns = [0, 60, 120, 180, 240, 300] as const
 
 export function PhotoStripBlockComponent({ layout: layoutProp, images }: PhotoStripBlockProps) {
   const layout = layoutProp ?? 'horizontalScroll'
+
   if (layout === 'grid4') {
     return (
-      <section className="bg-warm-white py-20 lg:py-28">
-        <div className="mx-auto max-w-[80rem] px-5 lg:px-8">
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-            {images.map((img, i) => (
-              <ScrollReveal key={i} delay={i * 80}>
-                <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
-                  <Image
-                    src={getUrl(img)}
-                    alt={getAlt(img)}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 50vw, 25vw"
-                  />
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
+      <section className="bg-white px-5 py-16 lg:px-8 lg:py-24">
+        <div className="mx-auto max-w-[80rem]">
+          <ScrollReveal>
+            <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+              {images.map((img, i) => (
+                <img
+                  key={i}
+                  src={getUrl(img)}
+                  alt={getAlt(img)}
+                  className="aspect-[4/3] w-full rounded-lg object-cover"
+                />
+              ))}
+            </div>
+          </ScrollReveal>
         </div>
       </section>
     )
@@ -58,60 +64,44 @@ export function PhotoStripBlockComponent({ layout: layoutProp, images }: PhotoSt
 
   if (layout === 'grid2') {
     return (
-      <section className="bg-warm-white py-20 lg:py-28">
-        <div className="mx-auto max-w-[80rem] px-5 lg:px-8">
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-            {images.slice(0, 2).map((img, i) => (
-              <ScrollReveal key={i} delay={i * 120}>
-                <div
-                  className={`relative overflow-hidden rounded-lg ${
-                    i === 1 ? 'mt-8' : ''
-                  }`}
-                >
-                  <div className="relative aspect-[3/4]">
-                    <Image
-                      src={getUrl(img)}
-                      alt={getAlt(img)}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 640px) 100vw, 50vw"
-                    />
-                  </div>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
+      <section className="bg-warm-white px-5 py-16 lg:px-8 lg:py-24">
+        <div className="mx-auto max-w-[80rem]">
+          <ScrollReveal>
+            <div className="grid grid-cols-2 gap-3">
+              {images.slice(0, 2).map((img, i) => (
+                <img
+                  key={i}
+                  src={getUrl(img)}
+                  alt={getAlt(img)}
+                  className={`aspect-[3/4] w-full rounded-lg object-cover ${i === 1 ? 'mt-8' : ''}`}
+                />
+              ))}
+            </div>
+          </ScrollReveal>
         </div>
       </section>
     )
   }
 
-  // horizontalScroll layout
+  // horizontalScroll layout — edge-to-edge, no max-w container
   return (
-    <section className="overflow-hidden bg-white py-20 lg:py-28">
-      <div className="mx-auto max-w-[80rem] px-5 lg:px-8">
-        <div className="-mx-2 flex items-start gap-4">
-          {images.map((img, i) => {
-            const heightClass = heightPatterns[i % heightPatterns.length]
-            const marginClass = marginPatterns[i % marginPatterns.length]
+    <section className="overflow-hidden bg-white py-16 lg:py-24">
+      <div className="-mx-2 flex items-start gap-4">
+        {images.map((img, i) => {
+          const heightClass = heightPatterns[i % heightPatterns.length]
+          const marginClass = marginPatterns[i % marginPatterns.length]
+          const delay = delayPatterns[i % delayPatterns.length]
 
-            return (
-              <ScrollReveal key={i} delay={i * 100}>
-                <div
-                  className={`relative shrink-0 overflow-hidden rounded-lg ${heightClass} ${marginClass} w-56 lg:w-72`}
-                >
-                  <Image
-                    src={getUrl(img)}
-                    alt={getAlt(img)}
-                    fill
-                    className="object-cover transition-all duration-500 hover:scale-105 hover:-rotate-1 hover:shadow-xl"
-                    sizes="(max-width: 1024px) 224px, 288px"
-                  />
-                </div>
-              </ScrollReveal>
-            )
-          })}
-        </div>
+          return (
+            <ScrollReveal key={i} delay={delay}>
+              <img
+                src={getUrl(img)}
+                alt={getAlt(img)}
+                className={`${heightClass} ${marginClass} w-auto shrink-0 rounded-lg object-cover transition-all duration-500 hover:scale-105 hover:-rotate-1 hover:shadow-xl hover:shadow-brand-black/10`}
+              />
+            </ScrollReveal>
+          )
+        })}
       </div>
     </section>
   )

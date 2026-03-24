@@ -13,17 +13,17 @@ export function BlockquoteBlockComponent({
 }: BlockquoteBlockProps) {
   if (style === 'leftBorder') {
     return (
-      <section className="bg-warm-white py-12 lg:py-16">
-        <div className="mx-auto max-w-[80rem] px-5 lg:px-8">
+      <section className="bg-warm-white px-5 py-16 lg:px-8 lg:py-20">
+        <div className="mx-auto max-w-3xl">
           <ScrollReveal>
-            <blockquote className="border-l-4 border-light-red-1 pl-6">
-              <p className="font-serif text-lg italic leading-relaxed text-dark-grey">
+            <blockquote className="border-l-2 border-light-red-1 pl-4">
+              <p className="text-sm italic leading-relaxed text-mid-grey">
                 {quote}
               </p>
               {attribution && (
-                <cite className="mt-4 block text-sm font-semibold not-italic uppercase tracking-wide text-mid-grey">
+                <footer className="mt-2 text-xs font-semibold uppercase tracking-[0.1em] text-mid-grey/70">
                   {attribution}
-                </cite>
+                </footer>
               )}
             </blockquote>
           </ScrollReveal>
@@ -34,21 +34,19 @@ export function BlockquoteBlockComponent({
 
   // Centered style
   return (
-    <section className="bg-warm-white py-20 lg:py-28">
-      <div className="mx-auto max-w-[80rem] px-5 lg:px-8">
+    <section className="bg-white px-5 py-20 lg:px-8 lg:py-28">
+      <div className="mx-auto max-w-3xl text-center">
         <ScrollReveal>
-          <div className="mx-auto max-w-3xl text-center">
-            <blockquote>
-              <p className="font-serif text-[length:var(--text-h3)] italic leading-relaxed text-brand-black">
-                {quote}
-              </p>
-            </blockquote>
+          <blockquote>
+            <p className="font-serif text-h2 font-normal italic leading-heading text-brand-black">
+              &ldquo;{quote}&rdquo;
+            </p>
             {attribution && (
-              <cite className="mt-6 block text-sm font-semibold not-italic uppercase tracking-widest text-mid-grey">
+              <footer className="mt-6 text-sm font-semibold uppercase tracking-[0.15em] text-mid-grey">
                 {attribution}
-              </cite>
+              </footer>
             )}
-          </div>
+          </blockquote>
         </ScrollReveal>
       </div>
     </section>

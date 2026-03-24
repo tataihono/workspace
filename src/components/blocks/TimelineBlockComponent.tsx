@@ -25,7 +25,7 @@ export function TimelineBlockComponent({
 
   return (
     <section
-      className={`py-20 lg:py-28 ${isDark ? 'bg-brand-black' : 'bg-warm-white'}`}
+      className={`overflow-hidden px-5 py-24 lg:px-8 lg:py-32 ${isDark ? 'bg-brand-black' : 'bg-warm-white'}`}
     >
       <div className="mx-auto max-w-[80rem] px-5 lg:px-8">
         {/* Header */}
@@ -34,7 +34,7 @@ export function TimelineBlockComponent({
             <div className="mb-16">
               {eyebrow && (
                 <p
-                  className={`text-sm font-semibold uppercase tracking-widest ${
+                  className={`text-xs font-semibold uppercase tracking-[0.2em] ${
                     isDark ? 'text-light-red-2' : 'text-rich-red'
                   }`}
                 >
@@ -43,7 +43,7 @@ export function TimelineBlockComponent({
               )}
               {heading && (
                 <h2
-                  className={`mt-4 font-serif text-[length:var(--text-h2)] leading-[var(--leading-heading)] ${
+                  className={`mt-4 font-serif text-h2 font-normal leading-heading ${
                     isDark ? 'text-white' : 'text-brand-black'
                   }`}
                 >
@@ -75,14 +75,16 @@ export function TimelineBlockComponent({
                       : 'border-l border-warm-grey/30 lg:border-l-0 lg:border-t'
                   } py-6 lg:pt-8`}
                 >
-                  <p className="font-serif text-3xl text-rich-red">{event.year}</p>
-                  <p
-                    className={`mt-3 text-xs font-bold uppercase tracking-widest ${
+                  <span className="font-serif text-[2.5rem] font-normal leading-none text-rich-red">
+                    {event.year}
+                  </span>
+                  <h3
+                    className={`mt-3 text-sm font-bold uppercase tracking-wide ${
                       isDark ? 'text-white' : 'text-brand-black'
                     }`}
                   >
                     {event.title}
-                  </p>
+                  </h3>
                   {event.description && (
                     <p
                       className={`mt-2 text-sm leading-relaxed ${

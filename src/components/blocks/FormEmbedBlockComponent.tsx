@@ -27,19 +27,19 @@ export function FormEmbedBlockComponent({
     )
 
   return (
-    <section className="bg-warm-white py-20 lg:py-28">
+    <section className="bg-warm-white px-5 py-16 lg:px-8 lg:py-24">
       <div className="mx-auto max-w-[80rem] px-5 lg:px-8">
         {/* Optional header */}
         {(eyebrow || heading || description) && (
           <ScrollReveal>
             <div className={`mb-12 ${layout === 'centered' ? 'text-center' : ''}`}>
               {eyebrow && (
-                <p className="text-sm font-semibold uppercase tracking-widest text-rich-red">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-rich-red">
                   {eyebrow}
                 </p>
               )}
               {heading && (
-                <h2 className="mt-4 font-serif text-[length:var(--text-h2)] leading-[var(--leading-heading)] text-brand-black">
+                <h2 className="mt-3 font-serif text-h2 font-normal leading-heading text-brand-black">
                   {heading}
                 </h2>
               )}
@@ -59,7 +59,7 @@ export function FormEmbedBlockComponent({
         {/* Form */}
         <ScrollReveal>
           {layout === 'centered' ? (
-            <div className="mx-auto max-w-2xl rounded-xl border border-warm-grey/20 bg-white p-8 shadow-sm">
+            <div className="mx-auto max-w-2xl rounded-xl border border-warm-grey/60 bg-white p-8 shadow-sm lg:p-10">
               {FormComponent}
             </div>
           ) : (

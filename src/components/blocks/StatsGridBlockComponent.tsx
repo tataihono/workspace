@@ -23,19 +23,19 @@ export function StatsGridBlockComponent({
   items,
 }: StatsGridBlockProps) {
   return (
-    <section className="bg-warm-white py-20 lg:py-28">
+    <section className="bg-warm-white px-5 py-24 lg:px-8 lg:py-32">
       <div className="mx-auto max-w-[80rem] px-5 lg:px-8">
         {/* Header */}
         {(eyebrow || heading || description) && (
           <ScrollReveal>
             <div className="mb-16 text-center">
               {eyebrow && (
-                <p className="text-sm font-semibold uppercase tracking-widest text-rich-red">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-rich-red">
                   {eyebrow}
                 </p>
               )}
               {heading && (
-                <h2 className="mt-4 font-serif text-[length:var(--text-h2)] leading-[var(--leading-heading)] text-brand-black">
+                <h2 className="mt-4 font-serif text-h2 font-normal leading-heading text-brand-black">
                   {heading}
                 </h2>
               )}
@@ -52,7 +52,7 @@ export function StatsGridBlockComponent({
         <div className="space-y-8">
           {items.map((item, i) => (
             <ScrollReveal key={i} delay={i * 100}>
-              <div className="overflow-hidden rounded-xl border border-warm-grey/20 lg:min-h-[280px]">
+              <div className="overflow-hidden rounded-xl border border-warm-grey/60 bg-white lg:min-h-[280px]">
                 <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr]">
                   {/* Dark stat panel */}
                   <div className="flex flex-col items-center justify-center bg-brand-black px-8 py-10 text-center lg:py-12">

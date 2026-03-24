@@ -11,21 +11,21 @@ export function PageHeaderBlockComponent({
   eyebrow,
   heading,
   description,
-  theme = 'dark',
+  theme = 'light',
 }: PageHeaderBlockProps) {
   const isDark = theme === 'dark'
 
   return (
     <section
-      className={`px-5 pb-16 pt-32 lg:px-8 lg:pb-20 lg:pt-40 ${
-        isDark ? 'bg-brand-black' : 'bg-warm-white'
+      className={`px-5 pb-8 pt-32 lg:px-8 lg:pt-40 ${
+        isDark ? 'bg-brand-black lg:pb-20' : 'bg-warm-white'
       }`}
     >
       <div className="mx-auto max-w-[80rem]">
         <ScrollReveal>
           {eyebrow && (
             <p
-              className={`text-sm font-semibold uppercase tracking-widest ${
+              className={`text-xs font-semibold uppercase tracking-[0.2em] ${
                 isDark ? 'text-light-red-2' : 'text-rich-red'
               }`}
             >
@@ -34,7 +34,7 @@ export function PageHeaderBlockComponent({
           )}
 
           <h1
-            className={`mt-4 font-serif text-display ${
+            className={`mt-3 font-serif text-display font-normal leading-display ${
               isDark ? 'text-white' : 'text-brand-black'
             }`}
           >
@@ -43,7 +43,7 @@ export function PageHeaderBlockComponent({
 
           {description && (
             <p
-              className={`mt-6 max-w-2xl text-lg leading-relaxed ${
+              className={`mt-6 max-w-xl text-lg leading-body-lg ${
                 isDark ? 'text-warm-grey/70' : 'text-dark-grey'
               }`}
             >
