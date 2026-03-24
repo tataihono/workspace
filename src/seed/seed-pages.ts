@@ -445,10 +445,11 @@ async function seed() {
       },
       {
         blockType: 'content',
-        heading: 'Every member ministry',
+        heading: '*Every* member ministry',
         body: richText([
           "At Ev Church, the ministry team is never just the paid pastors and staff. We believe that God has given every Christian the gifts and opportunities to serve their fellow Christians and the community around them. You could even say that we are all gifts to our fellow brothers and sisters in Christ here at church.",
           "The phrase we use is \"every member ministry\". We want to see everyone at Ev Church, week-in and week-out, use who God has made them to be to love one another, pray for one another, serve, provide, train, and teach. Ev Church is a church where everyone is part of the ministry team.",
+          "While every member of Ev Church is called to serve, God has also set apart a team to lead, equip, and support the church family. These are the people who give their working week to shepherding, teaching, and building the life of the church so that every member can flourish in their gifts.",
         ]),
         alignment: 'center',
       },
