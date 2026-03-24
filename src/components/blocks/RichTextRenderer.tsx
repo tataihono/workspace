@@ -1,5 +1,3 @@
-'use client'
-
 /**
  * Simple Lexical rich text renderer.
  * Handles the basic node types produced by the seed script and Payload's Lexical editor.
