@@ -183,7 +183,8 @@ async function seed() {
         heading: 'A place to belong',
         highlightedText: 'belong',
         subtitle: 'Ev Church is a community of Christ-followers across Auckland. Whether you are exploring faith for the first time or have been part of a church for years, you are welcome here.',
-        overlayStyle: 'cinematic',
+        supportingText: 'Ev Church is a Christian church in Tāmaki Makaurau (Auckland), New Zealand. We meet across multiple campuses each Sunday, helping people follow Jesus, grow in faith, and become part of a welcoming community.',
+        overlayStyle: 'leftToRight',
         minHeight: '85vh',
         buttons: [
           { label: 'Plan Your Visit', href: '/visit', variant: 'primary' },
@@ -228,9 +229,9 @@ async function seed() {
       },
       {
         blockType: 'content',
-        heading: 'Real community, real faith',
+        heading: 'Captivated by Christ, grounded in the gospel, growing in maturity and number',
         body: richText(
-          'At Ev Church, we believe everyone has a place. We are a diverse, multigenerational community united by a shared love for Jesus and each other. Our Sunday services are relaxed, engaging, and designed to help you take your next step, wherever you are on your journey.',
+          'We are a bunch of people, convinced we are not perfect, captivated by the historical Jesus, excited about the future he offers, and eager to authentically share this hope with Auckland, New Zealand and the world.',
         ),
         alignment: 'center',
       },
@@ -238,26 +239,29 @@ async function seed() {
         blockType: 'manualCardGrid',
         eyebrow: 'Get connected',
         heading: 'Your next step',
-        cardStyle: 'info',
+        cardStyle: 'imageTop',
         columns: '3',
         cards: [
           {
+            image: img('ec-banner'),
             title: 'Explaining Christianity',
             description: 'A relaxed, no-pressure course exploring the basics of the Christian faith over several weeks.',
             href: '/explaining-christianity',
-            linkLabel: 'Find out more',
+            linkLabel: 'Learn more about Explaining Christianity',
           },
           {
+            image: img('connect-groups-banner'),
             title: 'Connect Groups',
             description: 'Small groups that meet during the week. A place to build real friendships and grow together.',
             href: '/connect-groups',
-            linkLabel: 'Find out more',
+            linkLabel: 'Find a Connect Group near you',
           },
           {
+            image: img('newish-connect-banner'),
             title: 'Newish Connect',
             description: 'New to Ev? This short course helps you meet people and find your place in the community.',
             href: '/newish',
-            linkLabel: 'Find out more',
+            linkLabel: 'Learn more about Newish Connect',
           },
         ],
       },
@@ -265,6 +269,7 @@ async function seed() {
         blockType: 'cta',
         heading: 'Everyone is welcome',
         text: 'We would love to meet you. Come as you are. No dress code, no expectations. Just a warm community ready to welcome you.',
+        supportingText: 'Planning to visit a church in Auckland? Here is what to expect when you join us on Sunday.',
         colorPreset: 'primary-red',
         buttons: [
           { label: 'Find a campus near you', href: '/visit', variant: 'primary' },
@@ -272,8 +277,8 @@ async function seed() {
       },
     ],
     seo: {
-      metaTitle: 'Ev Church | A Community of Christ-Followers in Auckland',
-      metaDescription: 'Join Ev Church this Sunday at one of our three Auckland campuses: North, Central, or Unichurch. Everyone is welcome.',
+      metaTitle: 'Church in Auckland | Ev Church NZ | Sunday Services & Community',
+      metaDescription: 'Looking for a church in Auckland? Ev Church is a community of Christ-followers meeting across Tāmaki Makaurau. Join us this Sunday or explore faith with us.',
     },
   })
 
@@ -288,17 +293,17 @@ async function seed() {
         eyebrow: 'Plan your visit',
         heading: 'Come as you are',
         highlightedText: 'you are',
-        subtitle: 'Whether it is your first time at church or you have been going for years, you are welcome at Ev. We would love to meet you this Sunday.',
-        overlayStyle: 'cinematic',
+        subtitle: 'Whether it is your first time at church or you have been going for years, you are welcome at Ev. If you are looking for a church in Auckland, we would love to meet you this Sunday.',
+        supportingText: 'Ev Church is a Christian church in Tāmaki Makaurau (Auckland), New Zealand, with campuses across the city meeting each Sunday.',
+        overlayStyle: 'leftToRight',
         minHeight: '70vh',
       },
       {
         blockType: 'featureGrid',
         eyebrow: 'What to expect',
         heading: 'Your first Sunday at Ev',
-        description: 'We want you to feel comfortable from the moment you walk in. Here is what a typical Sunday looks like.',
-        layout: 'fourColumn',
-        style: 'iconTop',
+        description: 'We want you to feel comfortable from the moment you walk in. Here is what you can expect when visiting Ev Church on a Sunday in Auckland.',
+        style: 'iconLeft',
         items: [
           {
             icon: 'smile',
@@ -308,7 +313,7 @@ async function seed() {
           {
             icon: 'graduation',
             title: 'Kids program',
-            description: 'Ev Kids runs during every service for ages 0 to 12. Safe, fun, and age-appropriate. Your kids will love it.',
+            description: 'Ev Kids runs during every service at North and Central for ages 1 to 12. Safe, fun, and age-appropriate. Your kids will love it.',
           },
           {
             icon: 'coffee',
@@ -324,12 +329,14 @@ async function seed() {
       },
       {
         blockType: 'photoStrip',
-        layout: 'grid4',
+        layout: 'horizontalScroll',
         images: [
           { image: img('carousel-3c68ddf1') },
           { image: img('carousel-c645786c') },
           { image: img('carousel-168f386e') },
           { image: img('carousel-9a8d8943') },
+          { image: img('carousel-db9ac570') },
+          { image: img('carousel-79cef650') },
         ],
       },
       {
@@ -372,17 +379,17 @@ async function seed() {
       {
         blockType: 'cta',
         heading: 'We would love to meet you',
-        text: 'Have questions before your visit? Get in touch and we will help you with anything you need. No question is too small.',
+        text: 'Have questions before visiting? Get in touch and we will help with anything you need, from finding the right campus to knowing what to expect on Sunday.',
         colorPreset: 'primary-red',
         buttons: [
           { label: 'Get in touch', href: '/contact', variant: 'primary' },
-          { label: 'Learn about us', href: '/about', variant: 'secondary' },
+          { label: 'Learn more about Ev Church', href: '/about', variant: 'secondary' },
         ],
       },
     ],
     seo: {
-      metaTitle: 'Visit | Ev Church Auckland',
-      metaDescription: 'Plan your first visit to Ev Church. Relaxed services, welcoming community, amazing kids program, and great coffee. Three campuses across Auckland.',
+      metaTitle: 'Plan Your Visit | Ev Church Auckland | What to Expect on Sunday',
+      metaDescription: 'Planning to visit a church in Auckland? Ev Church meets across Tāmaki Makaurau each Sunday. Find a campus, see what to expect, and come as you are.',
     },
   })
 

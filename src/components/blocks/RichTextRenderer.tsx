@@ -1,28 +1,112 @@
 /**
- * Minimal rich text renderer placeholder.
- *
- * When @payloadcms/richtext-lexical is fully configured, replace this
- * with the official `<RichText />` component from that package.
- * For now this safely serializes Lexical editor state to basic HTML-like output.
+ * Simple Lexical rich text renderer.
+ * Handles the basic node types produced by the seed script and Payload's Lexical editor.
  */
+
+interface LexicalNode {
+  type: string
+  text?: string
+  format?: number | string
+  children?: LexicalNode[]
+  tag?: string
+  listType?: string
+  url?: string
+  newTab?: boolean
+  version?: number
+  direction?: string
+}
+
+interface LexicalRoot {
+  root: LexicalNode
+}
 
 interface RichTextProps {
   data: unknown
   className?: string
 }
 
+function renderNode(node: LexicalNode, index: number): React.ReactNode {
+  // Text node
+  if (node.type === 'text') {
+    let content: React.ReactNode = node.text ?? ''
+    const format = typeof node.format === 'number' ? node.format : 0
+
+    if (format & 1) content = <strong key={index}>{content}</strong>
+    if (format & 2) content = <em key={index}>{content}</em>
+    if (format & 4) content = <s key={index}>{content}</s>
+    if (format & 8) content = <code key={index}>{content}</code>
+
+    return content
+  }
+
+  // Line break
+  if (node.type === 'linebreak') {
+    return <br key={index} />
+  }
+
+  const children = node.children?.map((child, i) => renderNode(child, i)) ?? []
+
+  // Paragraph
+  if (node.type === 'paragraph') {
+    return <p key={index}>{children}</p>
+  }
+
+  // Heading
+  if (node.type === 'heading') {
+    const Tag = (node.tag as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6') ?? 'h2'
+    return <Tag key={index}>{children}</Tag>
+  }
+
+  // List
+  if (node.type === 'list') {
+    const Tag = node.listType === 'number' ? 'ol' : 'ul'
+    return <Tag key={index}>{children}</Tag>
+  }
+
+  // List item
+  if (node.type === 'listitem') {
+    return <li key={index}>{children}</li>
+  }
+
+  // Link
+  if (node.type === 'link' || node.type === 'autolink') {
+    return (
+      <a
+        key={index}
+        href={node.url ?? '#'}
+        {...(node.newTab ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+      >
+        {children}
+      </a>
+    )
+  }
+
+  // Quote
+  if (node.type === 'quote') {
+    return <blockquote key={index}>{children}</blockquote>
+  }
+
+  // Root or unknown — just render children
+  return <>{children}</>
+}
+
 export default function RichText({ data, className }: RichTextProps) {
   if (!data) return null
 
-  // If the data is already a string (shouldn't be, but defensive)
+  // If the data is already a string
   if (typeof data === 'string') {
-    return <div className={className} dangerouslySetInnerHTML={{ __html: data }} />
+    return <div className={className}><p>{data}</p></div>
   }
 
-  // Placeholder: render as serialized JSON preview until Lexical renderer is wired up
+  // Parse Lexical JSON
+  const lexicalData = data as LexicalRoot
+  if (!lexicalData.root?.children) {
+    return null
+  }
+
   return (
     <div className={className}>
-      <p className="text-mid-grey italic">Rich text content from CMS</p>
+      {lexicalData.root.children.map((node, i) => renderNode(node, i))}
     </div>
   )
 }

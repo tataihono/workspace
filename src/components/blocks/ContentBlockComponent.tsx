@@ -1,6 +1,4 @@
-import Image from 'next/image'
 import { ScrollReveal } from '@/components/ui/ScrollReveal'
-import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 import RichText from '@/components/blocks/RichTextRenderer'
 
 interface MediaUpload {
@@ -13,7 +11,7 @@ interface MediaUpload {
 
 interface ContentBlockProps {
   heading?: string | null
-  body: SerializedEditorState
+  body: unknown
   image?: MediaUpload | string | null
   alignment?: 'left' | 'center' | 'right' | null
 }
@@ -29,58 +27,50 @@ export function ContentBlockComponent({
   const isCenter = alignment === 'center'
 
   return (
-    <section className="py-20 lg:py-28">
-      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+    <section className="bg-white px-5 py-24 lg:px-8 lg:py-32">
+      <div className="mx-auto max-w-[80rem]">
         <ScrollReveal>
           {isCenter || !hasImage ? (
-            /* Center or text-only layout */
-            <div className={isCenter ? 'text-center' : ''}>
+            <div className={isCenter ? 'mx-auto max-w-3xl text-center' : ''}>
               {heading && (
-                <h2 className="font-serif text-[length:var(--text-h2)] leading-[var(--leading-heading)] text-brand-black">
+                <h2 className="mt-3 text-h2 font-normal leading-heading text-brand-black">
                   {heading}
                 </h2>
               )}
-              <div className={`mt-6 prose prose-lg max-w-none text-dark-grey leading-[var(--leading-body)] ${isCenter ? 'mx-auto max-w-3xl' : ''}`}>
+              <div className="mt-6 text-lg leading-body-lg text-dark-grey">
                 <RichText data={body} />
               </div>
               {isCenter && imageData && (
                 <div className="mt-12">
-                  <Image
+                  <img
                     src={imageData.url}
                     alt={imageData.alt}
-                    width={imageData.width ?? 1200}
-                    height={imageData.height ?? 800}
                     className="mx-auto rounded-lg"
-                    sizes="(max-width: 768px) 100vw, 900px"
                   />
                 </div>
               )}
             </div>
           ) : (
-            /* Side-by-side layout */
             <div
-              className={`flex flex-col gap-12 lg:flex-row lg:items-center lg:gap-16 ${
-                alignment === 'right' ? 'lg:flex-row-reverse' : ''
+              className={`grid gap-16 lg:grid-cols-2 lg:items-center ${
+                alignment === 'right' ? 'lg:[direction:rtl]' : ''
               }`}
             >
-              <div className="flex-1">
+              <div className="lg:[direction:ltr]">
                 {heading && (
-                  <h2 className="font-serif text-[length:var(--text-h2)] leading-[var(--leading-heading)] text-brand-black">
+                  <h2 className="font-serif text-h2 font-normal leading-heading text-brand-black">
                     {heading}
                   </h2>
                 )}
-                <div className="mt-6 prose prose-lg max-w-none text-dark-grey leading-[var(--leading-body)]">
+                <div className="mt-6 space-y-4 text-lg leading-body-lg text-dark-grey">
                   <RichText data={body} />
                 </div>
               </div>
-              <div className="flex-1">
-                <Image
+              <div className="lg:[direction:ltr]">
+                <img
                   src={imageData.url}
                   alt={imageData.alt}
-                  width={imageData.width ?? 900}
-                  height={imageData.height ?? 600}
-                  className="rounded-lg"
-                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="w-full rounded-lg object-cover"
                 />
               </div>
             </div>
