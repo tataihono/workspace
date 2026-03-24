@@ -138,15 +138,6 @@ export function HeroBlockComponent({
             </p>
           )}
 
-          {supportingText && (
-            <p
-              className="animate-fade-in-up mt-4 max-w-lg text-sm leading-relaxed text-warm-grey/60"
-              style={{ animationDelay: '450ms' }}
-            >
-              {supportingText}
-            </p>
-          )}
-
           {buttons && buttons.length > 0 && (
             <div
               className="animate-fade-in-up mt-10 flex flex-wrap items-center gap-4"
@@ -165,6 +156,15 @@ export function HeroBlockComponent({
                 </Button>
               ))}
             </div>
+          )}
+
+          {supportingText && (
+            <p
+              className="animate-fade-in-up mt-8 max-w-lg text-sm leading-relaxed text-warm-grey/60"
+              style={{ animationDelay: '600ms' }}
+            >
+              {supportingText}
+            </p>
           )}
         </div>
       </div>
