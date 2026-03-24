@@ -471,7 +471,7 @@ async function seed() {
         blockType: 'manualCardGrid',
         description: 'Staff',
         cardStyle: 'imageTop',
-        columns: '4',
+        columns: '3',
         cards: [
           { image: img('team-steve'), title: 'Steve Mullins', subtitle: 'Executive Manager' },
           { image: img('team-jared'), title: 'Jared Stevenson', subtitle: 'Captivate Music Director' },

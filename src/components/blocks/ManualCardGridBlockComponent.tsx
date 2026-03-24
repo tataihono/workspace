@@ -90,7 +90,13 @@ function InfoCard({ card, index }: { card: ManualCard; index: number }) {
           {card.details.map((row, i) => (
             <div key={i} className="flex justify-between text-sm">
               <dt className="font-medium text-brand-black">{row.label}</dt>
-              <dd className="text-mid-grey">{row.value}</dd>
+              <dd className="text-mid-grey">
+                {row.value.includes('@') ? (
+                  <a href={`mailto:${row.value}`} className="text-rich-red hover:text-deep-red transition-colors">
+                    {row.value}
+                  </a>
+                ) : row.value}
+              </dd>
             </div>
           ))}
         </dl>
@@ -317,11 +323,15 @@ export function ManualCardGridBlockComponent({
                 {heading}
               </h2>
             )}
-            {description && (
+            {description && isTeamStyle ? (
+              <h3 className="mt-8 text-center font-sans text-sm font-semibold uppercase tracking-[0.15em] text-mid-grey">
+                {description}
+              </h3>
+            ) : description ? (
               <p className="mt-4 max-w-xl text-[0.9375rem] leading-relaxed text-dark-grey">
                 {description}
               </p>
-            )}
+            ) : null}
           </ScrollReveal>
         )}
 
