@@ -168,7 +168,7 @@ function ImageTopCard({ card, index }: { card: ManualCard; index: number }) {
   const content = (
     <div className={`group relative block overflow-hidden rounded-xl ${isTeamStyle ? 'border border-warm-grey/60 bg-white transition-shadow duration-300 hover:shadow-lg hover:shadow-rich-red/5' : ''}`}>
       {/* Image */}
-      <div className={`relative overflow-hidden ${isTeamStyle ? 'aspect-square' : 'aspect-[16/10]'}`}>
+      <div className={`relative overflow-hidden ${isTeamStyle ? 'aspect-[3/4]' : 'aspect-[16/10]'}`}>
         {url ? (
           <Image
             src={url}
