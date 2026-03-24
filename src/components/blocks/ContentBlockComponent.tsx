@@ -1,6 +1,21 @@
 import { ScrollReveal } from '@/components/ui/ScrollReveal'
 import RichText from '@/components/blocks/RichTextRenderer'
 
+/** Renders words wrapped in *asterisks* as italic red accents */
+function renderHighlightedHeading(text: string) {
+  const parts = text.split(/(\*[^*]+\*)/)
+  return parts.map((part, i) => {
+    if (part.startsWith('*') && part.endsWith('*')) {
+      return (
+        <span key={i} className="font-serif italic text-rich-red">
+          {part.slice(1, -1)}
+        </span>
+      )
+    }
+    return part
+  })
+}
+
 interface MediaUpload {
   id: string
   url: string
@@ -34,7 +49,7 @@ export function ContentBlockComponent({
             <div className={isCenter ? 'mx-auto max-w-3xl text-center' : ''}>
               {heading && (
                 <h2 className="mt-3 text-h2 font-normal leading-heading text-brand-black">
-                  {heading}
+                  {renderHighlightedHeading(heading)}
                 </h2>
               )}
               <div className="mt-6 text-lg leading-body-lg text-dark-grey">

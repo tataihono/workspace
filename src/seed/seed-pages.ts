@@ -229,7 +229,7 @@ async function seed() {
       },
       {
         blockType: 'content',
-        heading: 'Captivated by Christ, grounded in the gospel, growing in maturity and number',
+        heading: '*Captivated* by Christ, *grounded* in the gospel, *growing* in maturity and number',
         body: richText(
           'We are a bunch of people, convinced we are not perfect, captivated by the historical Jesus, excited about the future he offers, and eager to authentically share this hope with Auckland, New Zealand and the world.',
         ),
