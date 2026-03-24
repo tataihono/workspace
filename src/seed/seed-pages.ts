@@ -480,64 +480,100 @@ async function seed() {
       {
         blockType: 'hero',
         image: img('carousel-9a8d8943'),
-        eyebrow: 'Our vision',
-        heading: 'Where we are going',
-        highlightedText: 'going',
-        subtitle: 'For over two decades, Ev Church has been growing, planting, and dreaming. Here is the story of where we have been and where God is taking us next.',
+        eyebrow: 'Our 2030 vision',
+        heading: 'Grow. Plant. Train. Build.',
+        highlightedText: 'Train. Build.',
+        subtitle: 'We are asking God to do four big things in and through us by the year 2030. They are big things, but they are great things.',
         overlayStyle: 'cinematic',
-        minHeight: '70vh',
+        minHeight: '80vh',
       },
       {
         blockType: 'content',
-        heading: 'To see lives transformed by Jesus',
+        heading: 'Captivated by Christ, grounded in the gospel, growing in maturity and number',
         body: richText(
-          'This is the heartbeat of everything we do. Every service, every connect group, every outreach, every conversation is driven by a desire to see people encounter the living God and be changed from the inside out.',
+          'It is our prayer that God would see the people of Auckland, New Zealand and the world captivated by Christ, grounded in the gospel, growing in maturity and number. From our very beginning we have been passionately and prayerfully committed to magnifying the glory of God, connecting authentically with the world and the church, sharing the good news of Jesus with the lost, and equipping the next generation of gospel workers.',
         ),
         alignment: 'center',
       },
       {
-        blockType: 'blockquote',
-        quote: 'For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you, plans to give you hope and a future.',
-        attribution: 'Jeremiah 29:11',
-        style: 'centered',
-      },
-      {
         blockType: 'content',
-        heading: 'How it all started',
+        heading: '120,000 more Aucklanders trusting in Jesus',
         body: richText([
-          'Ev Church began in the early 2000s as a small group of people with a big dream: to build a church that would be a genuine home for anyone, regardless of their background or story.',
-          'What started as a single gathering has grown into a multi-campus church across Auckland. Along the way, we have seen countless lives changed, families restored, and a community built on love, generosity, and faith.',
-          'Today, we continue to grow and plant with the same passion and conviction that began all those years ago. The best is still ahead.',
+          'When we started, around 2-3% of Auckland trusted in Jesus. That was 30,000 people. We are praying God would increase that to 150,000 people, 10% of Auckland, in bible-believing, missional churches.',
+          'Why 10%? Because when a minority group reaches 10% of a population, the way that group is viewed within society changes. And because God has done it before. Through history\'s most reluctant prophet Jonah, God chose to save 120,000 people in Nineveh in a single day.',
+          'In Matthew 12 Jesus explained that one "greater than Jonah" was among them. The life and mission of Jesus Christ proclaims a gospel of greater salvation, and greater hope than Nineveh ever knew.',
         ]),
         image: img('carousel-0c59a44d'),
         alignment: 'left',
       },
       {
-        blockType: 'featureGrid',
-        eyebrow: 'Looking ahead',
-        heading: 'Our goals for the future',
-        layout: 'twoColumn',
-        style: 'iconLeft',
+        blockType: 'blockquote',
+        quote: 'We preach Christ crucified, a stumbling block to the Jews and foolishness to the Gentiles. Yet to those who are called, both Jews and Greeks, Christ is the power of God and the wisdom of God.',
+        attribution: '1 Corinthians 1:23-24',
+        style: 'centered',
+      },
+      {
+        blockType: 'content',
+        heading: 'The gospel fuels everything we do',
+        body: richText(
+          'At Ev we are very aware of the fact that we are weak. At the same time, we are extraordinarily confident because of God\'s strength. The news of Jesus\' life, death, resurrection and ascension, though appearing foolish to the world around us, is God\'s power for salvation. This gospel message is not just the beginning of the Christian life, but the way God keeps and grows us in the Christian life. It is through this gospel power that we ask God to work in and through us, to see many more people trust in Jesus across this great land and beyond.',
+        ),
+        alignment: 'center',
+      },
+      {
+        blockType: 'timeline',
+        eyebrow: 'The story so far',
+        heading: 'From 8 people to a city-wide church',
+        description: 'Ev started in January 2012 as 8 people in a lounge room. God has been faithful ever since.',
+        theme: 'dark',
+        events: [
+          { year: '2012', title: 'First gathering', description: '8 people in a lounge room in central Auckland' },
+          { year: '2013', title: 'Public launch', description: 'Movie Cinemas at St Lukes Mall, February 2013' },
+          { year: '2014', title: 'Unichurch planted', description: 'An evening congregation at the University of Auckland' },
+          { year: '2014', title: 'Apprenticeships', description: 'First ministry apprenticeships raising gospel workers' },
+          { year: '2015', title: 'Kids ministry', description: 'Kids ministry apprenticeship launches' },
+          { year: '2019', title: '2030 Vision', description: '300+ people across the city, vision launched' },
+        ],
+      },
+      {
+        blockType: 'blockquote',
+        quote: 'God has chosen what is insignificant and despised in the world to bring to nothing what is viewed as something, so that no one may boast in His presence.',
+        attribution: '1 Corinthians 1:28-31',
+        style: 'centered',
+      },
+      {
+        blockType: 'statsGrid',
+        eyebrow: '2030 vision',
+        heading: 'Four big things',
+        description: 'Given the resources God has given us, the immensity of the need, the urgency of the opportunity and the glory of God, we are prayerfully asking God to do four big things in and through us before the year 2030.',
         items: [
           {
-            icon: 'globe',
-            title: 'Multiply campuses',
-            description: 'We believe every community in Auckland deserves a local expression of church. Our goal is to launch new campuses that bring the gospel closer to where people live and work.',
+            label: 'Grow',
+            stat: '2,030',
+            statLabel: 'people across 6 campuses',
+            description: "God's picture of the future is a vast picture. A great multitude that no one could count. We care deeply for the lost, and we are asking God to grow His kingdom through us to 2,030 people across 6 Auckland campuses by 2030. Every one of those numbers is a person created by God and for God.",
+            scripture: 'After this I looked and there before me was a great multitude that no one could count, from every nation, tribe, people and language, standing before the throne and in front of the Lamb.',
+            scriptureReference: 'Revelation 7:9',
           },
           {
-            icon: 'users',
-            title: 'Raise up leaders',
-            description: 'Healthy churches are led by healthy leaders. We are committed to developing a pipeline of emerging leaders through our apprenticeship program, mentoring, and hands-on ministry training.',
+            label: 'Plant',
+            stat: '8',
+            statLabel: 'new churches across NZ',
+            description: 'We are asking God to establish 4 more local campuses across Auckland and 4 regional church plants across New Zealand in Dunedin, Hamilton, Tauranga and Palmerston North. Each campus will have live preaching, its own local leadership, and its own local feel. Planting churches comes with big sacrifices, but not planting churches comes with a sacrifice we are not willing to make.',
           },
           {
-            icon: 'heart',
-            title: 'Serve our city',
-            description: 'Auckland is our home, and we want to be the best neighbours we can be. We are growing our community initiatives, partnerships with local organisations, and practical support for those in need.',
+            label: 'Train',
+            stat: '30',
+            statLabel: 'gospel workers raised up',
+            description: 'Jesus tells us the harvest is plentiful but the workers are few. One of the greatest needs of the local church is equipping the saints for works of service. Through our ministry apprenticeship program, deep theological education, and block courses, we are asking God to raise up 30 workers for word-soaked gospel ministry by 2030.',
+            scripture: 'How, then, can they call on Him they have not believed in? And how can they believe without hearing about Him? And how can they hear without a preacher? How beautiful are the feet of those who bring good news.',
+            scriptureReference: 'Romans 10:14-15',
           },
           {
-            icon: 'globe',
-            title: 'Reach the nations',
-            description: 'Our vision does not stop at Auckland. Through mission partnerships and church planting support, we are investing in gospel work across the Pacific and beyond.',
+            label: 'Build',
+            stat: '1',
+            statLabel: 'gospel training hub',
+            description: 'Imagine a place where our community gathers to hear God\'s word, where people are equipped through conferences and theological training, where children meet their maker at holiday clubs, and where adults and youth feel at ease because their eyes are fixed on their heavenly home. We are not simply building Ev a home, but asking God to create a platform for gospel-centred, training-focused kingdom work for the next 200 years.',
           },
         ],
       },
@@ -552,19 +588,40 @@ async function seed() {
         ],
       },
       {
+        blockType: 'manualCardGrid',
+        eyebrow: 'How to partner',
+        heading: 'Three ways to join in',
+        cardStyle: 'info',
+        columns: '3',
+        cards: [
+          {
+            title: 'Pray for it',
+            description: 'Pray that God would do these four big things in and through us by 2030. We make our plans, but God determines our steps. He is in control and He calls us to depend on Him in prayer.',
+          },
+          {
+            title: 'Stay for it',
+            description: 'Decide that as far as humanly possible you will stay for this gospel vision. The spread of the gospel happens through relationships and relationships take time. Commit to staying with this vision until 2030 and beyond.',
+          },
+          {
+            title: 'Pay for it',
+            description: 'Everything we have is given to us by God, and is ultimately for His glory. The wisest investment anyone can make, the most secure investment, the investment that will produce the most return, is an investment in the kingdom of God.',
+          },
+        ],
+      },
+      {
         blockType: 'cta',
-        heading: 'Be part of the story',
-        text: 'The vision of Ev Church is carried by ordinary people who love God and love their city. There is a place for you in this story.',
+        heading: 'For His glory alone',
+        text: 'It is for God\'s glory and His glory alone that we invite you to join with us in this 2030 vision. Jesus deserves to be praised in this city, country and across the globe.',
         colorPreset: 'primary-red',
         buttons: [
           { label: 'Plan your visit', href: '/visit', variant: 'primary' },
-          { label: 'Meet the team', href: '/about', variant: 'secondary' },
+          { label: 'Get in touch', href: '/contact', variant: 'secondary' },
         ],
       },
     ],
     seo: {
-      metaTitle: 'Vision | Ev Church Auckland',
-      metaDescription: 'Discover the vision, history, and future goals of Ev Church. We exist to see lives transformed by Jesus across Auckland and beyond.',
+      metaTitle: 'Our 2030 Vision | Ev Church Auckland',
+      metaDescription: 'We are asking God to do four big things by 2030: grow to 2030 people across 6 campuses, plant 8 new churches, train 30 gospel workers, and build a gospel training hub.',
     },
   })
 
@@ -578,7 +635,7 @@ async function seed() {
         eyebrow: 'Get in touch',
         heading: 'Contact us',
         description: 'Have a question, need prayer, or just want to say hello? Fill out the form below and we will get back to you as soon as we can.',
-        theme: 'light',
+        theme: 'dark',
       },
       {
         blockType: 'formEmbed',
@@ -594,7 +651,7 @@ async function seed() {
         cards: [
           {
             title: 'North',
-            description: '10 Antares Place, Rosedale, Auckland 0632',
+            description: '9-11 Rothwell Avenue, Rosedale, Auckland',
             details: [
               { label: 'Service', value: 'Sunday 10:15 am' },
               { label: 'Email', value: 'north@ev.church' },
@@ -602,7 +659,7 @@ async function seed() {
           },
           {
             title: 'Central',
-            description: '15 Cross Street, Auckland CBD 1010',
+            description: '80 Olsen Avenue, Hillsborough, Auckland',
             details: [
               { label: 'Service', value: 'Sunday 10:15 am' },
               { label: 'Email', value: 'central@ev.church' },
@@ -645,7 +702,7 @@ async function seed() {
         blockType: 'content',
         heading: 'Where kids discover faith, friendship, and fun',
         body: richText(
-          'Ev Kids is our dedicated children\'s ministry for ages 0 to 12. Every Sunday, while you enjoy the service, your children are cared for by trained, police-vetted volunteers in age-appropriate programs filled with creativity, music, and Bible-based teaching.',
+          'Ev Kids is our dedicated children\'s ministry for ages 1 to 12, running at North and Central campuses. Every Sunday, while you enjoy the service, your children are cared for by trained, police-vetted volunteers in age-appropriate programs filled with creativity, music, and Bible-based teaching.',
         ),
         alignment: 'center',
       },
@@ -690,7 +747,7 @@ async function seed() {
         items: [
           {
             question: 'Is Ev Kids available at every service?',
-            answer: richText('Yes. Ev Kids runs during every Sunday service at all three campuses: North, Central, and Unichurch.'),
+            answer: richText('Yes. Ev Kids runs during every Sunday service at North and Central campuses.'),
           },
           {
             question: 'How do I check in my child?',
@@ -1032,7 +1089,7 @@ async function seed() {
         cards: [
           {
             title: 'North',
-            description: '10 Antares Place, Rosedale, Auckland 0632',
+            description: '9-11 Rothwell Avenue, Rosedale, Auckland',
             details: [
               { label: 'Good Friday', value: '10:00 am' },
               { label: 'Easter Sunday', value: '10:15 am' },
@@ -1040,7 +1097,7 @@ async function seed() {
           },
           {
             title: 'Central',
-            description: '15 Cross Street, Auckland CBD 1010',
+            description: '80 Olsen Avenue, Hillsborough, Auckland',
             details: [
               { label: 'Good Friday', value: '10:00 am' },
               { label: 'Easter Sunday', value: '10:15 am' },
