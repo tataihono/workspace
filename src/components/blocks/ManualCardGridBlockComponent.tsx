@@ -306,6 +306,7 @@ export function ManualCardGridBlockComponent({
   const cardStyle = cardStyleProp ?? 'info'
   const columns = Number(columnsProp) || 3
   const isAlternating = cardStyle === 'alternatingRows'
+  const isTeamStyle = cardStyle === 'imageTop' && cards.every(c => !c.description && !c.linkLabel)
 
   return (
     <section className="bg-warm-white px-5 py-24 lg:px-8 lg:py-32">
