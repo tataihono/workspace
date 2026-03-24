@@ -62,6 +62,16 @@ export const ManualCardGridBlock: Block = {
           type: 'textarea',
         },
         {
+          name: 'eyebrow',
+          type: 'text',
+          admin: { description: 'Small label above title (e.g. location)' },
+        },
+        {
+          name: 'address',
+          type: 'text',
+          admin: { description: 'Street address shown below time' },
+        },
+        {
           name: 'href',
           type: 'text',
           admin: { description: 'Link URL (makes card clickable)' },

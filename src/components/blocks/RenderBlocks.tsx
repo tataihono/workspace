@@ -177,9 +177,11 @@ interface ManualCardGridBlock extends BaseBlock {
   columns?: '2' | '3' | '4' | null
   cards: Array<{
     image?: Media | null
+    eyebrow?: string | null
     title: string
     subtitle?: string | null
     description?: string | null
+    address?: string | null
     href?: string | null
     linkLabel?: string | null
     details?: Array<{ label: string; value: string; id?: string }> | null
