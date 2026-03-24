@@ -1,7 +1,5 @@
 import type { Metadata } from 'next'
-import { unstable_cache } from 'next/cache'
 import { getPayloadClient } from '@/lib/payload'
-import { CACHE_TAGS } from '@/lib/cache-tags'
 import { RenderBlocks } from '@/components/blocks/RenderBlocks'
 
 async function getHomePage() {
@@ -17,13 +15,8 @@ async function getHomePage() {
   return result.docs[0] ?? null
 }
 
-const getCachedHomePage = unstable_cache(getHomePage, ['page', 'home'], {
-  tags: [CACHE_TAGS.pages],
-  revalidate: 60,
-})
-
 export async function generateMetadata(): Promise<Metadata> {
-  const page = await getCachedHomePage()
+  const page = await getHomePage()
 
   if (!page) {
     return {
@@ -65,7 +58,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
-  const page = await getCachedHomePage()
+  const page = await getHomePage()
 
   if (!page) {
     return (

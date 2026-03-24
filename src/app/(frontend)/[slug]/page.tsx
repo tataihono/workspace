@@ -1,8 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { unstable_cache } from 'next/cache'
 import { getPayloadClient } from '@/lib/payload'
-import { CACHE_TAGS } from '@/lib/cache-tags'
 import { RenderBlocks } from '@/components/blocks/RenderBlocks'
 
 async function getPageBySlug(slug: string) {
@@ -17,12 +15,6 @@ async function getPageBySlug(slug: string) {
 
   return result.docs[0] ?? null
 }
-
-const getCachedPage = (slug: string) =>
-  unstable_cache(() => getPageBySlug(slug), ['page', slug], {
-    tags: [CACHE_TAGS.pages],
-    revalidate: 60,
-  })()
 
 export async function generateStaticParams() {
   const payload = await getPayloadClient()
@@ -45,7 +37,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>
 }): Promise<Metadata> {
   const { slug } = await params
-  const page = await getCachedPage(slug)
+  const page = await getPageBySlug(slug)
 
   if (!page) return {}
 
@@ -84,7 +76,7 @@ export default async function DynamicPage({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
-  const page = await getCachedPage(slug)
+  const page = await getPageBySlug(slug)
 
   if (!page) notFound()
 
