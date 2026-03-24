@@ -163,37 +163,49 @@ function ImageOverlayCard({ card, index }: { card: ManualCard; index: number }) 
 function ImageTopCard({ card, index }: { card: ManualCard; index: number }) {
   const url = getImageUrl(card.image)
   const alt = getImageAlt(card.image)
+  const isTeamStyle = !card.description && !card.linkLabel
 
   const content = (
-    <div className="group relative block overflow-hidden rounded-xl">
+    <div className={`group relative block overflow-hidden rounded-xl ${isTeamStyle ? 'border border-warm-grey/60 bg-white transition-shadow duration-300 hover:shadow-lg hover:shadow-rich-red/5' : ''}`}>
       {/* Image */}
-      <div className="relative aspect-[16/10] overflow-hidden">
+      <div className={`relative overflow-hidden ${isTeamStyle ? 'aspect-square' : 'aspect-[16/10]'}`}>
         {url ? (
           <Image
             src={url}
             alt={alt}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+            className={`h-full w-full object-cover transition-transform duration-700 group-hover:scale-105 ${isTeamStyle ? 'object-top' : ''}`}
           />
         ) : (
-          <div className="h-full w-full bg-warm-grey/20" />
+          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-warm-grey/30 to-warm-grey/10">
+            <svg className="h-20 w-20 text-warm-grey" fill="none" viewBox="0 0 24 24" strokeWidth={0.8} stroke="currentColor" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+            </svg>
+          </div>
         )}
       </div>
 
-      {/* Dark content panel */}
-      <div className="bg-brand-black p-7">
-        <h3 className="font-serif text-h4 font-normal text-white">{card.title}</h3>
-        {card.description && (
-          <p className="mt-2 text-sm leading-relaxed text-warm-grey/60">{card.description}</p>
-        )}
-        {card.linkLabel && (
-          <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-light-red-2 transition-colors group-hover:text-white">
-            {card.linkLabel}
-            <ArrowSvg />
-          </span>
-        )}
-      </div>
+      {/* Content panel */}
+      {isTeamStyle ? (
+        <div className="p-5 text-center">
+          <h3 className="font-sans text-base font-bold text-brand-black">{card.title}</h3>
+          {card.subtitle && <p className="mt-1 text-sm text-mid-grey">{card.subtitle}</p>}
+        </div>
+      ) : (
+        <div className="bg-brand-black p-7">
+          <h3 className="font-serif text-h4 font-normal text-white">{card.title}</h3>
+          {card.description && (
+            <p className="mt-2 text-sm leading-relaxed text-warm-grey/60">{card.description}</p>
+          )}
+          {card.linkLabel && (
+            <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-light-red-2 transition-colors group-hover:text-white">
+              {card.linkLabel}
+              <ArrowSvg />
+            </span>
+          )}
+        </div>
+      )}
     </div>
   )
 
