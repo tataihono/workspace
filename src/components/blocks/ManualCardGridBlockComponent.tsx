@@ -168,14 +168,14 @@ function ImageTopCard({ card, index }: { card: ManualCard; index: number }) {
   const content = (
     <div className={`group relative block overflow-hidden rounded-xl ${isTeamStyle ? 'border border-warm-grey/60 bg-white transition-shadow duration-300 hover:shadow-lg hover:shadow-rich-red/5' : ''}`}>
       {/* Image */}
-      <div className={`relative overflow-hidden ${isTeamStyle ? 'aspect-[3/4]' : 'aspect-[16/10]'}`}>
+      <div className={`relative overflow-hidden ${isTeamStyle ? 'aspect-square' : 'aspect-[16/10]'}`}>
         {url ? (
           <Image
             src={url}
             alt={alt}
             fill
             sizes={isTeamStyle ? '(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw' : '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'}
-            className={`object-cover transition-transform duration-700 group-hover:scale-105 ${isTeamStyle ? 'object-top' : ''}`}
+            className="object-cover transition-transform duration-700 group-hover:scale-105"
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-warm-grey/30 to-warm-grey/10">
