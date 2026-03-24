@@ -2,6 +2,23 @@
 
 import { useState, useCallback } from 'react'
 
+/** Extract plain text from Lexical rich text JSON */
+function extractText(data: unknown): string {
+  if (!data || typeof data !== 'object') return ''
+  const root = (data as { root?: { children?: unknown[] } }).root
+  if (!root?.children) return ''
+
+  function getText(node: unknown): string {
+    if (!node || typeof node !== 'object') return ''
+    const n = node as { type?: string; text?: string; children?: unknown[] }
+    if (n.type === 'text' && n.text) return n.text
+    if (n.children) return n.children.map(getText).join('')
+    return ''
+  }
+
+  return root.children.map(getText).join(' ')
+}
+
 interface AccordionItem {
   question: string
   answer: unknown // Lexical rich text state
@@ -52,13 +69,11 @@ function AccordionRow({
       >
         <div className="overflow-hidden">
           <div className="pb-6 pr-12 text-dark-grey leading-[var(--leading-body)]">
-            {/* Render rich text answer as simple text for now; replace with RichText renderer when available */}
             {typeof item.answer === 'string' ? (
               <p>{item.answer}</p>
             ) : (
-              <div className="prose prose-sm max-w-none">
-                {/* Rich text content will be rendered here once the Lexical serializer is integrated */}
-                <p className="text-mid-grey italic">Content loaded from CMS</p>
+              <div className="text-[0.9375rem] leading-relaxed text-dark-grey">
+                {extractText(item.answer)}
               </div>
             )}
           </div>
