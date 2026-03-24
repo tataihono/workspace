@@ -431,6 +431,7 @@ async function seed() {
         blockType: 'manualCardGrid',
         eyebrow: 'Our people',
         heading: 'Meet the team',
+        description: 'Pastors',
         cardStyle: 'info',
         columns: '3',
         cards: [
@@ -440,42 +441,70 @@ async function seed() {
           { title: 'Sarah Hamilton', subtitle: 'Kids Pastor' },
           { title: 'Reuben Munn', subtitle: 'Campus Pastor, Central' },
           { title: 'Grace Munn', subtitle: 'Community Pastor' },
+        ],
+      },
+      {
+        blockType: 'manualCardGrid',
+        description: 'Ministry Staff',
+        cardStyle: 'info',
+        columns: '3',
+        cards: [
           { title: 'David Thompson', subtitle: 'Elder' },
           { title: 'Michelle Lee', subtitle: 'Elder' },
           { title: 'Mark Jensen', subtitle: 'Elder' },
           { title: 'Rachel Adams', subtitle: 'Elder' },
+        ],
+      },
+      {
+        blockType: 'manualCardGrid',
+        description: 'Apprentices',
+        cardStyle: 'info',
+        columns: '3',
+        cards: [
           { title: 'Liam Parker', subtitle: 'Ministry Apprentice' },
           { title: 'Mia Chen', subtitle: 'Ministry Apprentice' },
           { title: 'Ethan Williams', subtitle: 'Ministry Apprentice' },
         ],
       },
       {
+        blockType: 'content',
+        heading: 'Our foundational beliefs',
+        body: richText(
+          "Ev Church is an evangelical church that is independent in governance but united with Christians around the world and throughout history in upholding the gospel of Jesus Christ. We hold the Bible to be the supreme authority in all matters of faith and conduct and weigh all our teaching against its standard. We believe the teachings outlined in the historic church creeds (known commonly as The Apostles' Creed, The Nicene Creed and The Athanasian Creed) are faithful expressions of the teaching of the Christian Scriptures. We hold to the Reformation teaching that God's rescue comes by grace alone, through faith alone, in the Person and work of Christ alone as revealed in the Scripture alone, to the glory of God alone.",
+        ),
+        alignment: 'center',
+      },
+      {
         blockType: 'accordion',
-        heading: 'Our beliefs',
+        heading: 'What we believe',
         items: [
           {
-            question: 'The Bible',
-            answer: richText('We believe the Bible is the inspired Word of God. It is the ultimate authority for what we believe and how we live.'),
+            question: 'About God',
+            answer: "There is one unique and eternal God, who exists in an everlasting loving relationship of Father, Son and Spirit \u2013 one God in three persons. God is sovereign in all things: including creation, revelation, redemption, judgement and the establishing of His kingdom. As sovereign loving creator and redeemer, He is worthy of all glory, honour and praise.",
           },
           {
-            question: 'God',
-            answer: richText('We believe in one God who exists eternally in three persons: Father, Son, and Holy Spirit. He is the Creator and Sustainer of all things.'),
+            question: 'About Humanity',
+            answer: "Men and women together are created in the image of God and, therefore, enjoy a unique dignity in creation and a unique relationship with God. Men and women together have dominion over the created order. Tragically, human nature is universally sinful since the Fall and all are guilty before God. This leaves us under the wrath and condemnation of God. We are unable, without the prior regenerative work of God's Spirit, to turn ourselves to God.",
           },
           {
-            question: 'Jesus Christ',
-            answer: richText('We believe Jesus Christ is the Son of God, fully God and fully human. He lived a perfect life, died on the cross for our sins, and rose again on the third day.'),
+            question: 'About the Bible',
+            answer: "There is no other way to know God except that He reveals Himself to us. The Bible is God's revelation to us. The words of the Bible are divinely inspired and infallible, as originally given, and have supreme authority in all matters of faith, conduct and experience. The Bible is sufficient for knowing God. It is not only central to the well-being of the church but is able to thoroughly equip the Christian community for life and godliness.",
           },
           {
-            question: 'The Holy Spirit',
-            answer: richText('We believe the Holy Spirit is present and active in the life of every believer, empowering us to live for God and equipping us with gifts for service.'),
+            question: 'About Jesus Christ',
+            answer: "Jesus Christ was conceived by the Holy Spirit and born of the virgin Mary. He is both fully God and truly human. He entered fully into human experience. He endured temptation and He suffered and died. He was perfectly obedient to God His father. Jesus took on Himself the consequences of human sin. He died and was buried. On the third day He rose from the dead bodily and is now exalted as ruler over all. He will come again in glory to judge the living and the dead.",
           },
           {
-            question: 'Salvation',
-            answer: richText('We believe that salvation is a gift from God, received through faith in Jesus Christ. It is not earned by good works but given freely by grace.'),
+            question: 'About Salvation',
+            answer: "There is only one name under heaven by which we can be brought into relationship with God: the name \u2018Jesus Christ\u2019. It is only through the sacrificial death of Jesus Christ, as our representative and substitute, that the guilt, penalty and power of sin can be removed. In that death, God demonstrates His love to us most perfectly and establishes His victory over Satan and all His foes. The work of the Holy Spirit is necessary to make the death of Jesus effective in an individual's life. The Spirit enables the sinner to repent and put their faith in Jesus Christ, so that salvation is entirely of God's grace, through faith alone, and not of human merit or works.",
           },
           {
-            question: 'The Church',
-            answer: richText('We believe the church is the body of Christ on earth. It is a community of Christ-followers called to worship God, grow together, and serve the world.'),
+            question: 'About the Holy Spirit',
+            answer: "The Holy Spirit is co-equal with the Father and the Son, and indwells all true believers. His role is to bring glory to Jesus Christ, thus making Jesus Christ central in all things. The Spirit works to illuminate believers' minds to grasp the truth of the Bible, producing in them His fruit, granting them His gifts and empowering them for service. He grants His gifts for the purpose of service, not self-indulgence.",
+          },
+          {
+            question: 'About the Church',
+            answer: "The visible church is the gathering of believers around Christ in His word. It is a community of people intended by God to bear witness to Him and actively seek the extension of His rule. Within its community, both men and women are to seek proper expression of their gifts as they work to build the church in love.",
           },
         ],
       },
@@ -773,23 +802,23 @@ async function seed() {
         items: [
           {
             question: 'Is Ev Kids available at every service?',
-            answer: richText('Yes. Ev Kids runs during every Sunday service at North and Central campuses.'),
+            answer: 'Yes. Ev Kids runs during every Sunday service at North and Central campuses.',
           },
           {
             question: 'How do I check in my child?',
-            answer: richText('When you arrive, our welcome team will direct you to the kids check-in area. You will receive a tag that matches your child for a secure pick-up after the service.'),
+            answer: 'When you arrive, our welcome team will direct you to the kids check-in area. You will receive a tag that matches your child for a secure pick-up after the service.',
           },
           {
             question: 'What if my child has special needs or allergies?',
-            answer: richText('We want every child to have a great experience. Please let our team know at check-in about any special needs, allergies, or requirements, and we will do our best to accommodate them.'),
+            answer: 'We want every child to have a great experience. Please let our team know at check-in about any special needs, allergies, or requirements, and we will do our best to accommodate them.',
           },
           {
             question: 'Can I stay with my child?',
-            answer: richText('Absolutely. Parents are welcome to stay with their children, especially in the Creche. We want you to feel comfortable and confident in the care your child receives.'),
+            answer: 'Absolutely. Parents are welcome to stay with their children, especially in the Creche. We want you to feel comfortable and confident in the care your child receives.',
           },
           {
             question: 'Are your volunteers police vetted?',
-            answer: richText('Yes. All Ev Kids volunteers are police vetted and trained in child safety. The wellbeing of your children is our highest priority.'),
+            answer: 'Yes. All Ev Kids volunteers are police vetted and trained in child safety. The wellbeing of your children is our highest priority.',
           },
         ],
       },
@@ -1154,23 +1183,23 @@ async function seed() {
         items: [
           {
             question: 'Do I need to register for Easter services?',
-            answer: richText('No registration is needed. Just show up and we will have a seat for you. Arrive a little early to grab a coffee and settle in.'),
+            answer: 'No registration is needed. Just show up and we will have a seat for you. Arrive a little early to grab a coffee and settle in.',
           },
           {
             question: 'Is there a kids program on Easter?',
-            answer: richText('Yes. Ev Kids runs during all Easter services for children aged 0 to 12. It is a special Easter edition with fun activities and crafts.'),
+            answer: 'Yes. Ev Kids runs during all Easter services for children aged 0 to 12. It is a special Easter edition with fun activities and crafts.',
           },
           {
             question: 'What should I wear?',
-            answer: richText('Whatever you are comfortable in. There is no dress code at Ev Church. Come as you are.'),
+            answer: 'Whatever you are comfortable in. There is no dress code at Ev Church. Come as you are.',
           },
           {
             question: 'How long are the services?',
-            answer: richText('Easter services run approximately 75 to 90 minutes. They include live worship music, a message, and time for reflection.'),
+            answer: 'Easter services run approximately 75 to 90 minutes. They include live worship music, a message, and time for reflection.',
           },
           {
             question: 'Can I invite friends and family?',
-            answer: richText('Absolutely. Easter is one of the best times to invite someone to church. Everyone is welcome.'),
+            answer: 'Absolutely. Easter is one of the best times to invite someone to church. Everyone is welcome.',
           },
         ],
       },

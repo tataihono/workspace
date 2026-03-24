@@ -2,23 +2,6 @@
 
 import { useState, useCallback } from 'react'
 
-/** Extract plain text from Lexical rich text JSON */
-function extractText(data: unknown): string {
-  if (!data || typeof data !== 'object') return ''
-  const root = (data as { root?: { children?: unknown[] } }).root
-  if (!root?.children) return ''
-
-  function getText(node: unknown): string {
-    if (!node || typeof node !== 'object') return ''
-    const n = node as { type?: string; text?: string; children?: unknown[] }
-    if (n.type === 'text' && n.text) return n.text
-    if (n.children) return n.children.map(getText).join('')
-    return ''
-  }
-
-  return root.children.map(getText).join(' ')
-}
-
 interface AccordionItem {
   question: string
   answer: unknown // Lexical rich text state
@@ -69,13 +52,9 @@ function AccordionRow({
       >
         <div className="overflow-hidden">
           <div className="pb-6 pr-12 text-dark-grey leading-[var(--leading-body)]">
-            {typeof item.answer === 'string' ? (
-              <p>{item.answer}</p>
-            ) : (
-              <div className="text-[0.9375rem] leading-relaxed text-dark-grey">
-                {extractText(item.answer)}
-              </div>
-            )}
+            <p className="text-[0.9375rem] leading-relaxed text-dark-grey">
+              {typeof item.answer === 'string' ? item.answer : ''}
+            </p>
           </div>
         </div>
       </div>
@@ -106,10 +85,10 @@ export function AccordionBlockComponent({
   )
 
   return (
-    <section className="py-20 lg:py-28">
-      <div className="mx-auto max-w-3xl px-6 sm:px-8 lg:px-12">
+    <section className="bg-white px-5 py-24 lg:px-8 lg:py-32">
+      <div className="mx-auto max-w-3xl">
         {heading && (
-          <h2 className="mb-10 text-center font-serif text-[length:var(--text-h2)] leading-[var(--leading-heading)] text-brand-black">
+          <h2 className="mb-10 text-center font-serif text-h2 font-normal leading-heading text-brand-black">
             {heading}
           </h2>
         )}

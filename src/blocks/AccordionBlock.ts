@@ -20,7 +20,7 @@ export const AccordionBlock: Block = {
         },
         {
           name: 'answer',
-          type: 'richText',
+          type: 'textarea',
           required: true,
         },
       ],
