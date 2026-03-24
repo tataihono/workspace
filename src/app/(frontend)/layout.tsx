@@ -10,11 +10,11 @@ import '@/styles/globals.css'
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://ev.church'),
   title: {
-    default: 'Ev Church | Auckland, New Zealand',
+    default: 'Church in Auckland | Ev Church NZ | Sunday Services & Community',
     template: '%s | Ev Church',
   },
   description:
-    'Ev Church is a community of Christ-followers across Auckland, New Zealand. Join us this Sunday at North, Central, or Unichurch.',
+    'Looking for a church in Auckland? Ev Church is a community of Christ-followers meeting across Tāmaki Makaurau. Join us this Sunday or explore faith with us.',
   keywords: [
     'Ev Church',
     'Auckland church',
@@ -22,7 +22,8 @@ export const metadata: Metadata = {
     'Christian community Auckland',
     'Sunday service Auckland',
     'North Shore church',
-    'Auckland CBD church',
+    'Rosedale church',
+    'Hillsborough church',
     'university church Auckland',
   ],
   authors: [{ name: 'Ev Church' }],
@@ -38,15 +39,15 @@ export const metadata: Metadata = {
     locale: 'en_NZ',
     url: 'https://ev.church',
     siteName: 'Ev Church',
-    title: 'Ev Church | Auckland, New Zealand',
+    title: 'Church in Auckland | Ev Church NZ | Sunday Services & Community',
     description:
-      'A community of Christ-followers across Auckland. Everyone is welcome.',
+      'Looking for a church in Auckland? Ev Church is a community of Christ-followers meeting across Tāmaki Makaurau. Join us this Sunday or explore faith with us.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Ev Church | Auckland, New Zealand',
+    title: 'Church in Auckland | Ev Church NZ',
     description:
-      'A community of Christ-followers across Auckland. Everyone is welcome.',
+      'A community of Christ-followers meeting across Tāmaki Makaurau. Join us this Sunday.',
   },
   other: {
     'google-site-verification': '',
@@ -68,7 +69,7 @@ export default function FrontendLayout({ children }: { children: ReactNode }) {
         <link rel="dns-prefetch" href="https://use.typekit.net" />
         <OrganizationJsonLd />
       </head>
-      <body className="bg-warm-white font-sans text-brand-black antialiased">
+      <body className="bg-brand-black font-sans text-brand-black antialiased">
         <GoogleAnalytics />
         <AnnouncementBanner />
         <Header />

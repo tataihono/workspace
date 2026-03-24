@@ -11,13 +11,49 @@ export const HeroBlock: Block = {
       required: true,
     },
     {
+      name: 'eyebrow',
+      type: 'text',
+      admin: { description: 'Small uppercase text above heading (e.g. "Auckland, New Zealand")' },
+    },
+    {
       name: 'heading',
       type: 'text',
       required: true,
     },
     {
-      name: 'subtitle',
+      name: 'highlightedText',
       type: 'text',
+      admin: { description: 'Word(s) in the heading to render in italic accent color (e.g. "belong")' },
+    },
+    {
+      name: 'subtitle',
+      type: 'textarea',
+    },
+    {
+      name: 'supportingText',
+      type: 'textarea',
+      admin: { description: 'Smaller muted text below subtitle (used for SEO)' },
+    },
+    {
+      name: 'overlayStyle',
+      type: 'select',
+      defaultValue: 'default',
+      options: [
+        { label: 'Default (bottom gradient)', value: 'default' },
+        { label: 'Cinematic (layered)', value: 'cinematic' },
+        { label: 'Left to right', value: 'leftToRight' },
+      ],
+    },
+    {
+      name: 'minHeight',
+      type: 'select',
+      defaultValue: '70vh',
+      options: [
+        { label: 'Short (50vh)', value: '50vh' },
+        { label: 'Medium (70vh)', value: '70vh' },
+        { label: 'Tall (80vh)', value: '80vh' },
+        { label: 'Full (85vh)', value: '85vh' },
+      ],
     },
     {
       name: 'buttons',

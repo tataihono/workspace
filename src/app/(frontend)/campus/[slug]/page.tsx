@@ -6,6 +6,8 @@ import { ScrollReveal } from '@/components/ui/ScrollReveal'
 
 interface CampusData {
   name: string
+  /** Full branded name, e.g. "Ev Central" or "Unichurch" */
+  brandName: string
   tagline: string
   time: string
   location: string
@@ -14,59 +16,66 @@ interface CampusData {
   heroImage: string
   galleryImages: { src: string; alt: string }[]
   mapPlaceholder: string
+  kidsProgram: boolean
 }
 
 const campusData: Record<string, CampusData> = {
   central: {
     name: 'Central',
+    brandName: 'Ev Central',
     tagline: 'In the heart of the city',
     time: 'Sunday 10:15 am',
-    location: 'Auckland CBD',
-    address: '15 Cross Street, Auckland CBD 1010',
+    location: 'Hillsborough, Auckland',
+    address: '80 Olsen Avenue, Hillsborough, Auckland',
     description:
-      'Ev Central is located right in the heart of Auckland city. We are a diverse, vibrant community of people from all walks of life. Whether you live in the CBD, work nearby, or are visiting the city, you are welcome here. Our Sunday services feature live worship, an engaging message, and genuine community.',
-    heroImage: '/images/campus-central/photo-1.jpg',
+      'Ev Central meets in Hillsborough, south-central Auckland. We are a diverse, vibrant community of people from all walks of life. Whether you live nearby or are visiting, you are welcome here. Our Sunday services feature live worship, an engaging message, and genuine community.',
+    heroImage: '/images/campus-central/photo-3b4be562.jpg',
     galleryImages: [
-      { src: '/images/campus-central/photo-2.jpg', alt: 'Worship at Ev Central' },
-      { src: '/images/campus-central/photo-3.jpg', alt: 'Community at Ev Central' },
-      { src: '/images/campus-central/photo-4.jpg', alt: 'People connecting at Ev Central' },
-      { src: '/images/campus-central/photo-5.jpg', alt: 'Ev Central gathering' },
+      { src: '/images/campus-central/photo-9018bc8d.jpg', alt: 'Worship at Ev Central' },
+      { src: '/images/campus-central/photo-c1a8d4f7.jpg', alt: 'Community at Ev Central' },
+      { src: '/images/campus-central/photo-e85b8b0f.jpg', alt: 'People connecting at Ev Central' },
+      { src: '/images/campus-central/photo-f38f53fe.jpg', alt: 'Ev Central gathering' },
     ],
-    mapPlaceholder: 'https://www.google.com/maps?q=15+Cross+Street+Auckland+CBD',
+    mapPlaceholder: 'https://www.google.com/maps?q=80+Olsen+Avenue+Hillsborough+Auckland',
+    kidsProgram: true,
   },
   unichurch: {
     name: 'Unichurch',
+    brandName: 'Unichurch',
     tagline: 'Faith on campus',
     time: 'Sunday 5:15 pm',
     location: 'University of Auckland',
     address: 'University of Auckland, 24 Princes Street, Auckland 1010',
     description:
       'Unichurch is our campus expression specifically for university students. Meeting on Sunday evenings, it is the perfect way to end your weekend and start your week. If you are a student at the University of Auckland or any tertiary institution in the city, this is your community. Expect relaxed vibes, real conversations, and a space to explore faith.',
-    heroImage: '/images/campus-unichurch/photo-1.jpg',
+    heroImage: '/images/campus-unichurch/photo-3cb597b9.jpg',
     galleryImages: [
-      { src: '/images/campus-unichurch/photo-2.jpg', alt: 'Students at Unichurch' },
-      { src: '/images/campus-unichurch/photo-3.jpg', alt: 'Unichurch worship' },
-      { src: '/images/campus-unichurch/photo-4.jpg', alt: 'Community at Unichurch' },
-      { src: '/images/campus-unichurch/photo-5.jpg', alt: 'Unichurch gathering' },
+      { src: '/images/campus-unichurch/photo-4e451abd.jpg', alt: 'Students at Unichurch' },
+      { src: '/images/campus-unichurch/photo-af1c0355.jpg', alt: 'Unichurch worship' },
+      { src: '/images/campus-unichurch/photo-be476efc.jpg', alt: 'Community at Unichurch' },
+      { src: '/images/campus-unichurch/photo-d912efee.jpg', alt: 'Unichurch gathering' },
     ],
     mapPlaceholder: 'https://www.google.com/maps?q=24+Princes+Street+Auckland',
+    kidsProgram: false,
   },
   north: {
     name: 'North',
+    brandName: 'Ev North',
     tagline: 'Community on the Shore',
     time: 'Sunday 10:15 am',
-    location: 'Albany, Auckland',
-    address: '10 Antares Place, Rosedale, Auckland 0632',
+    location: 'Rosedale, Auckland',
+    address: '9-11 Rothwell Avenue, Rosedale, Auckland',
     description:
-      'Ev North is located on the North Shore, serving families and individuals across Albany, Rosedale, and the wider Shore community. We are a warm, welcoming church with a heart for people at every stage of life. Our services are relaxed and family-friendly, with excellent programs for kids of all ages.',
-    heroImage: '/images/homepage/carousel-5e2f5c9a.jpg',
+      'Ev North is located in Rosedale on the North Shore, serving families and individuals across the wider Shore community. We are a warm, welcoming church with a heart for people at every stage of life. Our services are relaxed and family-friendly, with excellent programs for kids of all ages.',
+    heroImage: '/images/homepage/carousel-c645786c.jpg',
     galleryImages: [
-      { src: '/images/homepage/carousel-4e35f42e.jpg', alt: 'People at Ev North' },
-      { src: '/images/homepage/carousel-2c75cbf3.jpg', alt: 'Community at Ev North' },
-      { src: '/images/homepage/carousel-d3b2d72e.jpg', alt: 'Worship at Ev North' },
+      { src: '/images/homepage/carousel-3c68ddf1.jpg', alt: 'People at Ev North' },
+      { src: '/images/homepage/carousel-168f386e.jpg', alt: 'Community at Ev North' },
+      { src: '/images/homepage/carousel-9a8d8943.jpg', alt: 'Worship at Ev North' },
       { src: '/images/homepage/carousel-70ac2785.jpg', alt: 'Ev North gathering' },
     ],
-    mapPlaceholder: 'https://www.google.com/maps?q=10+Antares+Place+Rosedale+Auckland',
+    mapPlaceholder: 'https://www.google.com/maps?q=9-11+Rothwell+Avenue+Rosedale+Auckland',
+    kidsProgram: true,
   },
 }
 
@@ -85,7 +94,7 @@ export async function generateMetadata({
 
   return {
     title: `${campus.name} Campus | Ev Church Auckland`,
-    description: `Join Ev Church ${campus.name} at ${campus.address}. Services every ${campus.time}. A welcoming community in ${campus.location}.`,
+    description: `Join ${campus.brandName} at ${campus.address}. Services every ${campus.time}. A welcoming community in ${campus.location}.`,
     openGraph: {
       title: `${campus.name} Campus | Ev Church`,
       description: `Services every ${campus.time} at ${campus.location}. Everyone is welcome.`,
@@ -96,7 +105,7 @@ export async function generateMetadata({
     },
     twitter: {
       card: 'summary_large_image',
-      title: `Ev Church ${campus.name}`,
+      title: `${campus.brandName}`,
       description: `${campus.time} at ${campus.location}.`,
     },
     alternates: {
@@ -124,7 +133,7 @@ export default async function CampusPage({
         <div className="absolute inset-0">
           <img
             src={campus.heroImage}
-            alt={`Ev Church ${campus.name} campus`}
+            alt={`${campus.brandName} campus`}
             className="h-full w-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-brand-black/80 via-brand-black/60 to-brand-black/30" />
@@ -164,7 +173,6 @@ export default async function CampusPage({
           </div>
         </div>
 
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-warm-white to-transparent" />
       </section>
 
       {/* Description + Service Info */}
@@ -177,7 +185,7 @@ export default async function CampusPage({
                   About this campus
                 </p>
                 <h2 className="mt-3 font-serif text-h2 font-normal leading-heading text-brand-black">
-                  Welcome to Ev {campus.name}
+                  Welcome to {campus.brandName}
                 </h2>
                 <p className="mt-6 text-lg leading-body-lg text-dark-grey">
                   {campus.description}
@@ -207,10 +215,12 @@ export default async function CampusPage({
                       <dt className="font-semibold text-brand-black">Duration</dt>
                       <dd className="mt-1 text-dark-grey">Approximately 75 minutes</dd>
                     </div>
-                    <div>
-                      <dt className="font-semibold text-brand-black">Kids program</dt>
-                      <dd className="mt-1 text-dark-grey">Available for ages 0 to 12</dd>
-                    </div>
+                    {campus.kidsProgram && (
+                      <div>
+                        <dt className="font-semibold text-brand-black">Kids program</dt>
+                        <dd className="mt-1 text-dark-grey">Available for ages 1 to 12</dd>
+                      </div>
+                    )}
                   </dl>
                 </div>
               </ScrollReveal>
@@ -224,7 +234,7 @@ export default async function CampusPage({
         <div className="mx-auto max-w-[80rem]">
           <ScrollReveal>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-rich-red">
-              Life at Ev {campus.name}
+              Life at {campus.brandName}
             </p>
             <h2 className="mt-3 font-serif text-h2 font-normal leading-heading text-brand-black">
               See what we are about
@@ -311,7 +321,7 @@ export default async function CampusPage({
               See you this Sunday
             </h2>
             <p className="mt-5 text-lg leading-body-lg text-light-red-3">
-              We would love to welcome you to Ev {campus.name}.
+              We would love to welcome you to {campus.brandName}.
               Come as you are. Everyone has a place here.
             </p>
             <div className="mt-10">

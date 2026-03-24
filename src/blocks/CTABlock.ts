@@ -48,5 +48,15 @@ export const CTABlock: Block = {
         { label: 'Dark', value: 'dark' },
       ],
     },
+    {
+      name: 'supportingText',
+      type: 'text',
+      admin: { description: 'Smaller text below the main paragraph' },
+    },
+    {
+      name: 'accentColor',
+      type: 'text',
+      admin: { description: 'Optional hex color override (e.g. #0096C3)' },
+    },
   ],
 }

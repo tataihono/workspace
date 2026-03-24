@@ -47,7 +47,7 @@ export default async function BlogPostPage({ params }: Props) {
       <section className="relative flex min-h-[50vh] items-end overflow-hidden bg-brand-black">
         <div className="absolute inset-0">
           <img
-            src="/images/homepage/carousel-5e2f5c9a.jpg"
+            src="/images/homepage/carousel-c645786c.jpg"
             alt={title}
             className="h-full w-full object-cover"
           />

@@ -5,6 +5,14 @@ import { CardGridBlockComponent } from './CardGridBlockComponent'
 import { AccordionBlockComponent } from './AccordionBlockComponent'
 import { ImageGalleryBlockComponent } from './ImageGalleryBlockComponent'
 import { VideoBlockComponent } from './VideoBlockComponent'
+import { FeatureGridBlockComponent } from './FeatureGridBlockComponent'
+import { TimelineBlockComponent } from './TimelineBlockComponent'
+import { StatsGridBlockComponent } from './StatsGridBlockComponent'
+import { BlockquoteBlockComponent } from './BlockquoteBlockComponent'
+import { FormEmbedBlockComponent } from './FormEmbedBlockComponent'
+import { ManualCardGridBlockComponent } from './ManualCardGridBlockComponent'
+import { PhotoStripBlockComponent } from './PhotoStripBlockComponent'
+import { PageHeaderBlockComponent } from './PageHeaderBlockComponent'
 
 /**
  * Union of all known block types.
@@ -15,24 +23,39 @@ interface BaseBlock {
   id?: string
 }
 
+interface MediaRef {
+  id: string
+  url: string
+  alt: string
+  width?: number
+  height?: number
+}
+
+type Media = MediaRef | string
+
 interface HeroBlock extends BaseBlock {
   blockType: 'hero'
-  image: { id: string; url: string; alt: string; width?: number; height?: number } | string
+  image: Media
+  eyebrow?: string | null
   heading: string
+  highlightedText?: string | null
   subtitle?: string | null
+  supportingText?: string | null
   buttons?: Array<{
     label: string
     href: string
     variant?: 'primary' | 'secondary' | 'text'
     id?: string
   }> | null
+  overlayStyle?: 'default' | 'cinematic' | 'leftToRight' | null
+  minHeight?: '50vh' | '70vh' | '80vh' | '85vh' | null
 }
 
 interface ContentBlock extends BaseBlock {
   blockType: 'content'
   heading?: string | null
   body: unknown
-  image?: { id: string; url: string; alt: string; width?: number; height?: number } | string | null
+  image?: Media | null
   alignment?: 'left' | 'center' | 'right' | null
 }
 
@@ -47,6 +70,8 @@ interface CTABlock extends BaseBlock {
     id?: string
   }> | null
   colorPreset?: 'primary-red' | 'light' | 'dark' | null
+  supportingText?: string | null
+  accentColor?: string | null
 }
 
 interface CardGridBlock extends BaseBlock {
@@ -69,7 +94,7 @@ interface AccordionBlock extends BaseBlock {
 interface ImageGalleryBlock extends BaseBlock {
   blockType: 'imageGallery'
   images: Array<{
-    image: { id: string; url: string; alt: string; width?: number; height?: number } | string
+    image: Media
     id?: string
   }>
 }
@@ -80,6 +105,105 @@ interface VideoBlock extends BaseBlock {
   caption?: string | null
 }
 
+interface FeatureGridBlock extends BaseBlock {
+  blockType: 'featureGrid'
+  eyebrow?: string | null
+  heading?: string | null
+  description?: string | null
+  layout?: 'twoColumn' | 'threeColumn' | 'fourColumn' | null
+  style?: 'iconTop' | 'iconLeft' | null
+  items: Array<{
+    icon?: string | null
+    title: string
+    description: string
+    id?: string
+  }>
+  accentColor?: string | null
+}
+
+interface TimelineBlock extends BaseBlock {
+  blockType: 'timeline'
+  eyebrow?: string | null
+  heading?: string | null
+  description?: string | null
+  theme?: 'dark' | 'light' | null
+  events: Array<{
+    year: string
+    title: string
+    description?: string | null
+    id?: string
+  }>
+}
+
+interface StatsGridBlock extends BaseBlock {
+  blockType: 'statsGrid'
+  eyebrow?: string | null
+  heading?: string | null
+  description?: string | null
+  items: Array<{
+    label: string
+    stat: string
+    statLabel: string
+    description: string
+    scripture?: string | null
+    scriptureReference?: string | null
+    id?: string
+  }>
+}
+
+interface BlockquoteBlockType extends BaseBlock {
+  blockType: 'blockquote'
+  quote: string
+  attribution?: string | null
+  style?: 'centered' | 'leftBorder' | null
+}
+
+interface FormEmbedBlock extends BaseBlock {
+  blockType: 'formEmbed'
+  eyebrow?: string | null
+  heading?: string | null
+  description?: string | null
+  formType: 'contact' | 'signup'
+  formTitle?: string | null
+  layout?: 'full' | 'centered' | null
+}
+
+interface ManualCardGridBlock extends BaseBlock {
+  blockType: 'manualCardGrid'
+  eyebrow?: string | null
+  heading?: string | null
+  description?: string | null
+  cardStyle?: 'info' | 'imageOverlay' | 'imageTop' | 'alternatingRows' | null
+  columns?: '2' | '3' | '4' | null
+  cards: Array<{
+    image?: Media | null
+    title: string
+    subtitle?: string | null
+    description?: string | null
+    href?: string | null
+    linkLabel?: string | null
+    details?: Array<{ label: string; value: string; id?: string }> | null
+    id?: string
+  }>
+}
+
+interface PhotoStripBlock extends BaseBlock {
+  blockType: 'photoStrip'
+  layout?: 'horizontalScroll' | 'grid4' | 'grid2' | null
+  images: Array<{
+    image: Media
+    id?: string
+  }>
+}
+
+interface PageHeaderBlock extends BaseBlock {
+  blockType: 'pageHeader'
+  eyebrow?: string | null
+  heading: string
+  description?: string | null
+  theme?: 'dark' | 'light' | null
+}
+
 type Block =
   | HeroBlock
   | ContentBlock
@@ -88,6 +212,14 @@ type Block =
   | AccordionBlock
   | ImageGalleryBlock
   | VideoBlock
+  | FeatureGridBlock
+  | TimelineBlock
+  | StatsGridBlock
+  | BlockquoteBlockType
+  | FormEmbedBlock
+  | ManualCardGridBlock
+  | PhotoStripBlock
+  | PageHeaderBlock
   | BaseBlock
 
 interface RenderBlocksProps {
@@ -109,9 +241,14 @@ export function RenderBlocks({ blocks }: RenderBlocksProps) {
               <HeroBlockComponent
                 key={key}
                 image={b.image}
+                eyebrow={b.eyebrow}
                 heading={b.heading}
+                highlightedText={b.highlightedText}
                 subtitle={b.subtitle}
+                supportingText={b.supportingText}
                 buttons={b.buttons}
+                overlayStyle={b.overlayStyle}
+                minHeight={b.minHeight}
               />
             )
           }
@@ -174,6 +311,115 @@ export function RenderBlocks({ blocks }: RenderBlocksProps) {
           case 'video': {
             const b = block as VideoBlock
             return <VideoBlockComponent key={key} url={b.url} caption={b.caption} />
+          }
+
+          case 'featureGrid': {
+            const b = block as FeatureGridBlock
+            return (
+              <FeatureGridBlockComponent
+                key={key}
+                eyebrow={b.eyebrow}
+                heading={b.heading}
+                description={b.description}
+                layout={b.layout}
+                style={b.style}
+                items={b.items}
+                accentColor={b.accentColor}
+              />
+            )
+          }
+
+          case 'timeline': {
+            const b = block as TimelineBlock
+            return (
+              <TimelineBlockComponent
+                key={key}
+                eyebrow={b.eyebrow}
+                heading={b.heading}
+                description={b.description}
+                theme={b.theme}
+                events={b.events}
+              />
+            )
+          }
+
+          case 'statsGrid': {
+            const b = block as StatsGridBlock
+            return (
+              <StatsGridBlockComponent
+                key={key}
+                eyebrow={b.eyebrow}
+                heading={b.heading}
+                description={b.description}
+                items={b.items}
+              />
+            )
+          }
+
+          case 'blockquote': {
+            const b = block as BlockquoteBlockType
+            return (
+              <BlockquoteBlockComponent
+                key={key}
+                quote={b.quote}
+                attribution={b.attribution}
+                style={b.style}
+              />
+            )
+          }
+
+          case 'formEmbed': {
+            const b = block as FormEmbedBlock
+            return (
+              <FormEmbedBlockComponent
+                key={key}
+                eyebrow={b.eyebrow}
+                heading={b.heading}
+                description={b.description}
+                formType={b.formType}
+                formTitle={b.formTitle}
+                layout={b.layout}
+              />
+            )
+          }
+
+          case 'manualCardGrid': {
+            const b = block as ManualCardGridBlock
+            return (
+              <ManualCardGridBlockComponent
+                key={key}
+                eyebrow={b.eyebrow}
+                heading={b.heading}
+                description={b.description}
+                cardStyle={b.cardStyle}
+                columns={b.columns}
+                cards={b.cards}
+              />
+            )
+          }
+
+          case 'photoStrip': {
+            const b = block as PhotoStripBlock
+            return (
+              <PhotoStripBlockComponent
+                key={key}
+                layout={b.layout}
+                images={b.images}
+              />
+            )
+          }
+
+          case 'pageHeader': {
+            const b = block as PageHeaderBlock
+            return (
+              <PageHeaderBlockComponent
+                key={key}
+                eyebrow={b.eyebrow}
+                heading={b.heading}
+                description={b.description}
+                theme={b.theme}
+              />
+            )
           }
 
           default:

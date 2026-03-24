@@ -12,14 +12,14 @@ export function OrganizationJsonLd() {
       {
         '@type': 'PostalAddress',
         name: 'Ev Church North',
-        addressLocality: 'Albany',
+        addressLocality: 'Rosedale',
         addressRegion: 'Auckland',
         addressCountry: 'NZ',
       },
       {
         '@type': 'PostalAddress',
         name: 'Ev Church Central',
-        addressLocality: 'Auckland CBD',
+        addressLocality: 'Hillsborough',
         addressRegion: 'Auckland',
         addressCountry: 'NZ',
       },

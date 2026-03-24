@@ -7,6 +7,14 @@ import { CardGridBlock } from '@/blocks/CardGridBlock'
 import { AccordionBlock } from '@/blocks/AccordionBlock'
 import { ImageGalleryBlock } from '@/blocks/ImageGalleryBlock'
 import { VideoBlock } from '@/blocks/VideoBlock'
+import { FeatureGridBlock } from '@/blocks/FeatureGridBlock'
+import { TimelineBlock } from '@/blocks/TimelineBlock'
+import { StatsGridBlock } from '@/blocks/StatsGridBlock'
+import { BlockquoteBlock } from '@/blocks/BlockquoteBlock'
+import { FormEmbedBlock } from '@/blocks/FormEmbedBlock'
+import { ManualCardGridBlock } from '@/blocks/ManualCardGridBlock'
+import { PhotoStripBlock } from '@/blocks/PhotoStripBlock'
+import { PageHeaderBlock } from '@/blocks/PageHeaderBlock'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -38,7 +46,7 @@ export const Pages: CollectionConfig = {
       unique: true,
       index: true,
       admin: {
-        description: 'URL path for this page (e.g. "about", "visit")',
+        description: 'URL path for this page (e.g. "about", "visit"). Use "home" for the homepage.',
       },
     },
     {
@@ -52,6 +60,14 @@ export const Pages: CollectionConfig = {
         AccordionBlock,
         ImageGalleryBlock,
         VideoBlock,
+        FeatureGridBlock,
+        TimelineBlock,
+        StatsGridBlock,
+        BlockquoteBlock,
+        FormEmbedBlock,
+        ManualCardGridBlock,
+        PhotoStripBlock,
+        PageHeaderBlock,
       ],
     },
     {

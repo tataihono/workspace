@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState, useCallback } from 'react'
 
 type NavItem = {
@@ -48,6 +49,7 @@ function ScrollProgress() {
       const docHeight = document.documentElement.scrollHeight - window.innerHeight
       setProgress(docHeight > 0 ? (scrollTop / docHeight) * 100 : 0)
     }
+    onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
@@ -62,10 +64,22 @@ function ScrollProgress() {
   )
 }
 
+/* ─────────────── Active Route Helper ─────────────── */
+function isActive(pathname: string, href: string): boolean {
+  if (href === '/') return pathname === '/'
+  return pathname === href || pathname.startsWith(href + '/')
+}
+
 /* ─────────────── Desktop Dropdown ─────────────── */
-function DesktopDropdown({ item, scrolled }: { item: NavItem; scrolled: boolean }) {
+function DesktopDropdown({ item, scrolled, pathname }: { item: NavItem; scrolled: boolean; pathname: string }) {
   const [open, setOpen] = useState(false)
+  const [canHover, setCanHover] = useState(false)
   const timeoutRef = useRef<ReturnType<typeof setTimeout>>(null)
+  const active = item.children?.some((child) => isActive(pathname, child.href)) ?? false
+
+  useEffect(() => {
+    setCanHover(window.matchMedia('(hover: hover)').matches)
+  }, [])
 
   function handleEnter() {
     if (timeoutRef.current) clearTimeout(timeoutRef.current)
@@ -76,25 +90,53 @@ function DesktopDropdown({ item, scrolled }: { item: NavItem; scrolled: boolean 
     timeoutRef.current = setTimeout(() => setOpen(false), 120)
   }
 
+  const classes = `group relative flex items-center gap-1.5 px-3 py-2 text-[0.8125rem] font-semibold uppercase tracking-wide transition-colors duration-200 ${
+    active
+      ? scrolled ? 'text-rich-red' : 'text-white'
+      : scrolled ? 'text-brand-black/80 hover:text-rich-red' : 'text-white/90 hover:text-white'
+  }`
+
+  const underline = (
+    <span
+      className={`absolute bottom-0 left-3 right-3 h-[2px] origin-left rounded-full transition-transform duration-300 ease-out ${
+        active ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+      } ${scrolled ? 'bg-rich-red' : 'bg-white'}`}
+    />
+  )
+
   return (
     <div
       className="relative"
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
     >
-      <button
-        className={`flex items-center gap-1.5 px-3 py-2 text-[0.8125rem] font-semibold uppercase tracking-wide transition-colors duration-200 ${
-          scrolled ? 'text-brand-black/80 hover:text-rich-red' : 'text-white/90 hover:text-white'
-        }`}
-        aria-expanded={open}
-        aria-haspopup="true"
-        onClick={() => setOpen(!open)}
-      >
-        {item.label}
-        <ChevronDown
-          className={`h-3 w-3 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
-        />
-      </button>
+      {canHover ? (
+        <Link
+          href={item.href}
+          className={classes}
+          aria-haspopup="true"
+          aria-expanded={open}
+        >
+          {item.label}
+          <ChevronDown
+            className={`h-3 w-3 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+          />
+          {underline}
+        </Link>
+      ) : (
+        <button
+          className={classes}
+          aria-expanded={open}
+          aria-haspopup="true"
+          onClick={() => setOpen(!open)}
+        >
+          {item.label}
+          <ChevronDown
+            className={`h-3 w-3 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+          />
+          {underline}
+        </button>
+      )}
       {open && (
         <div className="absolute left-1/2 top-full -translate-x-1/2 pt-2">
           <div className="animate-slide-down min-w-52 overflow-hidden rounded-lg border border-warm-grey/60 bg-white py-2 shadow-xl shadow-brand-black/5">
@@ -144,19 +186,27 @@ function MobileMenu({
 }) {
   const [expandedItem, setExpandedItem] = useState<string | null>(null)
 
-  if (!open) return null
-
   return (
-    <div className="fixed inset-0 top-0 z-40 lg:hidden">
+    <div
+      className={`fixed inset-0 top-0 z-[55] lg:hidden transition-visibility duration-300 ${
+        open ? 'visible' : 'invisible'
+      }`}
+    >
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-brand-black/30 backdrop-blur-sm animate-fade-in"
+        className={`absolute inset-0 bg-brand-black/30 backdrop-blur-sm transition-opacity duration-300 ${
+          open ? 'opacity-100' : 'opacity-0'
+        }`}
         onClick={onClose}
         aria-hidden="true"
       />
 
       {/* Panel */}
-      <div className="absolute right-0 top-0 h-full w-full max-w-sm overflow-y-auto bg-white shadow-2xl">
+      <div
+        className={`absolute right-0 top-0 h-full w-full max-w-sm overflow-y-auto bg-white shadow-2xl transition-transform duration-300 ease-out ${
+          open ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
         {/* Close button area, same height as header */}
         <div className="flex h-20 items-center justify-end px-6">
           <button
@@ -251,9 +301,19 @@ function MobileMenu({
 
 /* ─────────────── Header ─────────────── */
 export function Header() {
+  const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
   const [hidden, setHidden] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const hasScrolledRef = useRef(false)
+
+  // Set correct initial state without transition
+  useEffect(() => {
+    if (window.scrollY > 50) {
+      setScrolled(true)
+      hasScrolledRef.current = true
+    }
+  }, [])
 
   useEffect(() => {
     let lastY = window.scrollY
@@ -265,6 +325,12 @@ export function Header() {
       const y = window.scrollY
       const delta = y - lastY
       lastY = y
+
+      // Ignore scroll events until the user has actually scrolled
+      if (!hasScrolledRef.current) {
+        if (Math.abs(delta) < 2) return
+        hasScrolledRef.current = true
+      }
 
       setScrolled(y > 50)
 
@@ -307,7 +373,7 @@ export function Header() {
         className={`fixed left-0 right-0 top-0 z-50 transition-all duration-300 ${
           hidden && !mobileOpen ? '-translate-y-full' : 'translate-y-0'
         } ${
-          scrolled || mobileOpen
+          scrolled
             ? 'bg-white/90 shadow-sm shadow-brand-black/5 backdrop-blur-[12px]'
             : 'bg-transparent'
         }`}
@@ -333,19 +399,29 @@ export function Header() {
           >
             {navItems.map((item) =>
               item.children ? (
-                <DesktopDropdown key={item.label} item={item} scrolled={scrolled} />
+                <DesktopDropdown key={item.label} item={item} scrolled={scrolled} pathname={pathname} />
               ) : (
                 <Link
                   key={item.label}
                   href={item.href}
-                  className={`px-3 py-2 text-[0.8125rem] font-semibold uppercase tracking-wide transition-colors duration-200 ${
-                    scrolled ? 'text-brand-black/80 hover:text-rich-red' : 'text-white/90 hover:text-white'
+                  className={`group relative px-3 py-2 text-[0.8125rem] font-semibold uppercase tracking-wide transition-colors duration-200 ${
+                    isActive(pathname, item.href)
+                      ? scrolled ? 'text-rich-red' : 'text-white'
+                      : scrolled ? 'text-brand-black/80 hover:text-rich-red' : 'text-white/90 hover:text-white'
                   }`}
                   {...(item.href.startsWith('http')
                     ? { target: '_blank', rel: 'noopener noreferrer' }
                     : {})}
                 >
                   {item.label}
+                  {/* Animated underline */}
+                  <span
+                    className={`absolute bottom-0 left-3 right-3 h-[2px] origin-left rounded-full transition-transform duration-300 ease-out ${
+                      isActive(pathname, item.href)
+                        ? 'scale-x-100'
+                        : 'scale-x-0 group-hover:scale-x-100'
+                    } ${scrolled ? 'bg-rich-red' : 'bg-white'}`}
+                  />
                 </Link>
               ),
             )}
