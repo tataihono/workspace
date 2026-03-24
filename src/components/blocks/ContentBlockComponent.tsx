@@ -53,7 +53,7 @@ export function ContentBlockComponent({
                   {renderHighlightedHeading(heading)}
                 </h2>
               )}
-              <div className="mt-6 text-lg leading-body-lg text-dark-grey">
+              <div className="mt-6 space-y-4 text-lg leading-body-lg text-dark-grey">
                 <RichText data={body} />
               </div>
               {isCenter && imageData && (
