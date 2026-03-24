@@ -457,7 +457,7 @@ async function seed() {
         blockType: 'manualCardGrid',
         eyebrow: 'Our people',
         heading: 'Meet the team',
-        description: 'Senior Leadership & Pastors',
+        description: 'Pastors',
         cardStyle: 'imageTop',
         columns: '3',
         cards: [

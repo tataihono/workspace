@@ -325,7 +325,7 @@ export function ManualCardGridBlockComponent({
               </h2>
             )}
             {description && isTeamStyle ? (
-              <h3 className="mt-8 text-center font-sans text-sm font-semibold uppercase tracking-[0.15em] text-mid-grey">
+              <h3 className="mt-8 text-center font-serif text-h3 font-normal text-brand-black">
                 {description}
               </h3>
             ) : description ? (
