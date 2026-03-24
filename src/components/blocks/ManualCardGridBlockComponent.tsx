@@ -168,23 +168,40 @@ function ImageTopCard({ card, index }: { card: ManualCard; index: number }) {
   const content = (
     <div className={`group relative block overflow-hidden rounded-xl ${isTeamStyle ? 'border border-warm-grey/60 bg-white transition-shadow duration-300 hover:shadow-lg hover:shadow-rich-red/5' : ''}`}>
       {/* Image */}
-      <div className={`relative overflow-hidden ${isTeamStyle ? 'aspect-square' : 'aspect-[16/10]'}`}>
-        {url ? (
-          <Image
-            src={url}
-            alt={alt}
-            fill
-            sizes={isTeamStyle ? '(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw' : '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'}
-            className="object-cover transition-transform duration-700 group-hover:scale-105"
-          />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-warm-grey/30 to-warm-grey/10">
-            <svg className="h-20 w-20 text-warm-grey" fill="none" viewBox="0 0 24 24" strokeWidth={0.8} stroke="currentColor" aria-hidden="true">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-            </svg>
-          </div>
-        )}
-      </div>
+      {isTeamStyle ? (
+        <div className="overflow-hidden">
+          {url ? (
+            <Image
+              src={url}
+              alt={alt}
+              width={600}
+              height={600}
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+              className="w-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+          ) : (
+            <div className="flex aspect-square items-center justify-center bg-gradient-to-br from-warm-grey/30 to-warm-grey/10">
+              <svg className="h-20 w-20 text-warm-grey" fill="none" viewBox="0 0 24 24" strokeWidth={0.8} stroke="currentColor" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+              </svg>
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className="relative aspect-[16/10] overflow-hidden">
+          {url ? (
+            <Image
+              src={url}
+              alt={alt}
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              className="object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+          ) : (
+            <div className="h-full w-full bg-warm-grey/20" />
+          )}
+        </div>
+      )}
 
       {/* Content panel */}
       {isTeamStyle ? (
