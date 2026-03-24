@@ -52,9 +52,9 @@ export function StatsGridBlockComponent({
         <div className="space-y-8">
           {items.map((item, i) => (
             <ScrollReveal key={i} delay={i * 100}>
-              <div className="overflow-hidden rounded-xl border border-warm-grey/60 bg-white lg:min-h-[280px]">
-                <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr]">
-                  {/* Dark stat panel */}
+              <div className="overflow-hidden rounded-xl border border-warm-grey/60 bg-white">
+                <div className="grid grid-cols-1 lg:min-h-[280px] lg:grid-cols-[280px_1fr]">
+                  {/* Dark stat panel — stretches to full card height via grid */}
                   <div className="flex flex-col items-center justify-center bg-brand-black px-8 py-10 text-center lg:py-12">
                     <p className="text-xs font-semibold uppercase tracking-widest text-light-red-2">
                       {item.label}
