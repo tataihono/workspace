@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { ScrollReveal } from '@/components/ui/ScrollReveal'
 import RichText from '@/components/blocks/RichTextRenderer'
 
@@ -56,10 +57,13 @@ export function ContentBlockComponent({
                 <RichText data={body} />
               </div>
               {isCenter && imageData && (
-                <div className="mt-12">
-                  <img
+                <div className="relative mt-12">
+                  <Image
                     src={imageData.url}
                     alt={imageData.alt}
+                    width={imageData.width ?? 1200}
+                    height={imageData.height ?? 800}
+                    sizes="(max-width: 640px) 100vw, 50vw"
                     className="mx-auto rounded-lg"
                   />
                 </div>
@@ -81,10 +85,13 @@ export function ContentBlockComponent({
                   <RichText data={body} />
                 </div>
               </div>
-              <div className="lg:[direction:ltr]">
-                <img
+              <div className="relative lg:[direction:ltr]">
+                <Image
                   src={imageData.url}
                   alt={imageData.alt}
+                  width={imageData.width ?? 1200}
+                  height={imageData.height ?? 800}
+                  sizes="(max-width: 640px) 100vw, 50vw"
                   className="w-full rounded-lg object-cover"
                 />
               </div>

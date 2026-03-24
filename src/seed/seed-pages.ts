@@ -489,7 +489,7 @@ async function seed() {
       },
       {
         blockType: 'content',
-        heading: 'Captivated by Christ, grounded in the gospel, growing in maturity and number',
+        heading: '*Captivated* by Christ, *grounded* in the gospel, *growing* in maturity and number',
         body: richText(
           'It is our prayer that God would see the people of Auckland, New Zealand and the world captivated by Christ, grounded in the gospel, growing in maturity and number. From our very beginning we have been passionately and prayerfully committed to magnifying the glory of God, connecting authentically with the world and the church, sharing the good news of Jesus with the lost, and equipping the next generation of gospel workers.',
         ),
@@ -579,12 +579,14 @@ async function seed() {
       },
       {
         blockType: 'photoStrip',
-        layout: 'grid4',
+        layout: 'horizontalScroll',
         images: [
           { image: img('carousel-3c68ddf1') },
           { image: img('carousel-c645786c') },
           { image: img('carousel-168f386e') },
           { image: img('carousel-9a8d8943') },
+          { image: img('carousel-db9ac570') },
+          { image: img('carousel-79cef650') },
         ],
       },
       {

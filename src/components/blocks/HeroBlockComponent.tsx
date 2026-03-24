@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { Button, ArrowRight } from '@/components/ui/Button'
 
 interface MediaUpload {
@@ -101,9 +102,12 @@ export function HeroBlockComponent({
       {/* Background image */}
       {imageUrl && (
         <div className="absolute inset-0">
-          <img
+          <Image
             src={imageUrl}
             alt={imageAlt}
+            fill
+            priority
+            sizes="100vw"
             className="h-full w-full object-cover"
           />
           <Overlays style={overlay} />

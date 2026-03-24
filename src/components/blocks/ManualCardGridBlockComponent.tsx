@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { ScrollReveal } from '@/components/ui/ScrollReveal'
 import { Button, ArrowRight } from '@/components/ui/Button'
@@ -117,9 +118,11 @@ function ImageOverlayCard({ card, index }: { card: ManualCard; index: number }) 
   const content = (
     <div className="group relative block aspect-[3/4] overflow-hidden rounded-xl sm:aspect-[4/5]">
       {url && (
-        <img
+        <Image
           src={url}
           alt={alt}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
       )}
@@ -164,11 +167,13 @@ function ImageTopCard({ card, index }: { card: ManualCard; index: number }) {
   const content = (
     <div className="group relative block overflow-hidden rounded-xl">
       {/* Image */}
-      <div className="aspect-[16/10] overflow-hidden">
+      <div className="relative aspect-[16/10] overflow-hidden">
         {url ? (
-          <img
+          <Image
             src={url}
             alt={alt}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
         ) : (
@@ -213,11 +218,13 @@ function AlternatingRowCard({ card, index }: { card: ManualCard; index: number }
       >
         {/* Image */}
         <div className="lg:[direction:ltr]">
-          <div className="aspect-[4/3] overflow-hidden rounded-xl">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
             {url ? (
-              <img
+              <Image
                 src={url}
                 alt={alt}
+                fill
+                sizes="(max-width: 640px) 100vw, 50vw"
                 className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
               />
             ) : (

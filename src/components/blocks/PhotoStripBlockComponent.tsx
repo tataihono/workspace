@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { ScrollReveal } from '@/components/ui/ScrollReveal'
 
 interface PhotoImage {
@@ -48,12 +49,15 @@ export function PhotoStripBlockComponent({ layout: layoutProp, images }: PhotoSt
           <ScrollReveal>
             <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
               {images.map((img, i) => (
-                <img
-                  key={i}
-                  src={getUrl(img)}
-                  alt={getAlt(img)}
-                  className="aspect-[4/3] w-full rounded-lg object-cover"
-                />
+                <div key={i} className="relative aspect-[4/3]">
+                  <Image
+                    src={getUrl(img)}
+                    alt={getAlt(img)}
+                    fill
+                    sizes="(max-width: 768px) 50vw, 25vw"
+                    className="rounded-lg object-cover"
+                  />
+                </div>
               ))}
             </div>
           </ScrollReveal>
@@ -69,12 +73,15 @@ export function PhotoStripBlockComponent({ layout: layoutProp, images }: PhotoSt
           <ScrollReveal>
             <div className="grid grid-cols-2 gap-3">
               {images.slice(0, 2).map((img, i) => (
-                <img
-                  key={i}
-                  src={getUrl(img)}
-                  alt={getAlt(img)}
-                  className={`aspect-[3/4] w-full rounded-lg object-cover ${i === 1 ? 'mt-8' : ''}`}
-                />
+                <div key={i} className={`relative aspect-[3/4] ${i === 1 ? 'mt-8' : ''}`}>
+                  <Image
+                    src={getUrl(img)}
+                    alt={getAlt(img)}
+                    fill
+                    sizes="(max-width: 640px) 100vw, 50vw"
+                    className="rounded-lg object-cover"
+                  />
+                </div>
               ))}
             </div>
           </ScrollReveal>
@@ -94,9 +101,12 @@ export function PhotoStripBlockComponent({ layout: layoutProp, images }: PhotoSt
 
           return (
             <ScrollReveal key={i} delay={delay}>
-              <img
+              <Image
                 src={getUrl(img)}
                 alt={getAlt(img)}
+                width={600}
+                height={800}
+                sizes="300px"
                 className={`${heightClass} ${marginClass} w-auto shrink-0 rounded-lg object-cover transition-all duration-500 hover:scale-105 hover:-rotate-1 hover:shadow-xl hover:shadow-brand-black/10`}
               />
             </ScrollReveal>
