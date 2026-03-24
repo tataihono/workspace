@@ -174,8 +174,8 @@ function ImageTopCard({ card, index }: { card: ManualCard; index: number }) {
             src={url}
             alt={alt}
             fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            className={`h-full w-full object-cover transition-transform duration-700 group-hover:scale-105 ${isTeamStyle ? 'object-top' : ''}`}
+            sizes={isTeamStyle ? '(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw' : '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'}
+            className={`object-cover transition-transform duration-700 group-hover:scale-105 ${isTeamStyle ? 'object-top' : ''}`}
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-warm-grey/30 to-warm-grey/10">
