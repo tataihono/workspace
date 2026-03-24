@@ -97,7 +97,7 @@ export default function RichText({ data, className }: RichTextProps) {
 
   // If the data is already a string
   if (typeof data === 'string') {
-    return <div className={className}><p>{data}</p></div>
+    return <p className={className}>{data}</p>
   }
 
   // Parse Lexical JSON
@@ -106,9 +106,10 @@ export default function RichText({ data, className }: RichTextProps) {
     return null
   }
 
+  // Return children directly (no wrapper div) so parent space-y works
   return (
-    <div className={className}>
+    <>
       {lexicalData.root.children.map((node, i) => renderNode(node, i))}
-    </div>
+    </>
   )
 }
