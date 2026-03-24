@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { getPayloadClient } from '@/lib/payload'
 import { RenderBlocks } from '@/components/blocks/RenderBlocks'
 
+export const dynamic = 'force-dynamic'
+
 async function getHomePage() {
   const payload = await getPayloadClient()
 

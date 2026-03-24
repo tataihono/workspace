@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation'
 import { getPayloadClient } from '@/lib/payload'
 import { RenderBlocks } from '@/components/blocks/RenderBlocks'
 
+export const dynamic = 'force-dynamic'
+
 async function getPageBySlug(slug: string) {
   const payload = await getPayloadClient()
 
