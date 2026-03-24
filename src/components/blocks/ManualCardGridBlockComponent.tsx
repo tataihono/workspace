@@ -214,6 +214,19 @@ function ImageTopCard({ card, index }: { card: ManualCard; index: number }) {
         <div className="p-5 text-center">
           <h3 className="font-sans text-base font-bold text-brand-black">{card.title}</h3>
           {card.subtitle && <p className="mt-1 text-sm text-mid-grey">{card.subtitle}</p>}
+          {card.details && card.details.length > 0 && (
+            <div className="mt-2">
+              {card.details.map((row, i) => (
+                row.value.includes('@') ? (
+                  <a key={i} href={`mailto:${row.value}`} className="text-xs text-rich-red transition-colors hover:text-deep-red">
+                    {row.value}
+                  </a>
+                ) : (
+                  <p key={i} className="text-xs text-mid-grey">{row.value}</p>
+                )
+              ))}
+            </div>
+          )}
         </div>
       ) : (
         <div className="bg-brand-black p-7">

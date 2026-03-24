@@ -461,11 +461,11 @@ async function seed() {
         cardStyle: 'imageTop',
         columns: '3',
         cards: [
-          { image: img('team-rowan'), title: 'Rowan Hilsden', subtitle: 'Senior Pastor' },
-          { image: img('team-andrew'), title: 'Andrew Coombridge', subtitle: 'Pastor' },
-          { image: img('team-ryan'), title: 'Ryan Green', subtitle: 'Pastor' },
-          { image: img('team-austin'), title: 'Austin Ibarra', subtitle: 'Pastor' },
-          { image: img('team-ming'), title: 'Ming Yong', subtitle: 'Pastor & Kids Coordinator' },
+          { image: img('team-rowan'), title: 'Rowan Hilsden', subtitle: 'Senior Pastor', details: [{ label: 'Email', value: 'rowan.hilsden@ev.church' }] },
+          { image: img('team-andrew'), title: 'Andrew Coombridge', subtitle: 'Pastor', details: [{ label: 'Email', value: 'andrew.coombridge@ev.church' }] },
+          { image: img('team-ryan'), title: 'Ryan Green', subtitle: 'Pastor', details: [{ label: 'Email', value: 'ryan.green@ev.church' }] },
+          { image: img('team-austin'), title: 'Austin Ibarra', subtitle: 'Pastor', details: [{ label: 'Email', value: 'austin.ibarra@ev.church' }] },
+          { image: img('team-ming'), title: 'Ming Yong', subtitle: 'Pastor & Kids Coordinator', details: [{ label: 'Email', value: 'ming.yong@ev.church' }] },
         ],
       },
       {
@@ -474,10 +474,10 @@ async function seed() {
         cardStyle: 'imageTop',
         columns: '3',
         cards: [
-          { image: img('team-steve'), title: 'Steve Mullins', subtitle: 'Executive Manager' },
-          { image: img('team-jared'), title: 'Jared Stevenson', subtitle: 'Captivate Music Director' },
-          { image: img('team-ioana'), title: 'Ioana Selea', subtitle: 'Design and Social' },
-          { image: img('team-tim'), title: 'Tim Thang', subtitle: 'Executive Assistant' },
+          { image: img('team-steve'), title: 'Steve Mullins', subtitle: 'Executive Manager', details: [{ label: 'Email', value: 'steve.mullins@ev.church' }] },
+          { image: img('team-jared'), title: 'Jared Stevenson', subtitle: 'Captivate Music Director', details: [{ label: 'Email', value: 'jared.stevenson@ev.church' }] },
+          { image: img('team-ioana'), title: 'Ioana Selea', subtitle: 'Design and Social', details: [{ label: 'Email', value: 'ioana.selea@ev.church' }] },
+          { image: img('team-tim'), title: 'Tim Thang', subtitle: 'Executive Assistant', details: [{ label: 'Email', value: 'tim.thang@ev.church' }] },
         ],
       },
       {
@@ -486,11 +486,11 @@ async function seed() {
         cardStyle: 'imageTop',
         columns: '3',
         cards: [
-          { image: img('team-liz'), title: 'Liz Halliday', subtitle: 'Apprentice' },
-          { image: img('team-shaun'), title: 'Shaun Ee', subtitle: 'Apprentice' },
-          { image: img('team-manlong'), title: 'Man Long Cheung', subtitle: 'Apprentice' },
-          { image: img('team-tina'), title: 'Tina Mao', subtitle: 'Apprentice' },
-          { image: img('team-serena'), title: 'Serena Lau', subtitle: 'Apprentice' },
+          { image: img('team-liz'), title: 'Liz Halliday', subtitle: 'Apprentice', details: [{ label: 'Email', value: 'liz.halliday@ev.church' }] },
+          { image: img('team-shaun'), title: 'Shaun Ee', subtitle: 'Apprentice', details: [{ label: 'Email', value: 'shaun.ee@ev.church' }] },
+          { image: img('team-manlong'), title: 'Man Long Cheung', subtitle: 'Apprentice', details: [{ label: 'Email', value: 'manlong.cheung@ev.church' }] },
+          { image: img('team-tina'), title: 'Tina Mao', subtitle: 'Apprentice', details: [{ label: 'Email', value: 'tina.mao@ev.church' }] },
+          { image: img('team-serena'), title: 'Serena Lau', subtitle: 'Apprentice', details: [{ label: 'Email', value: 'serena.lau@ev.church' }] },
         ],
       },
       {
